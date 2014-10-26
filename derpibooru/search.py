@@ -16,6 +16,16 @@ class Search(object):
 
   @q.setter
   def q(self, q=[]):
+    if not isinstance(q, list):
+      raise TypeError("tags must be a list of strings")
+
+    for tag in q:
+      if not isinstance(tag, str):
+        raise TypeError("{0} is not a string".format(tag))
+
+      if tag == "":
+        raise ValueError("empty strings aren't valid tags")
+
     self.__q = q
 
   @property
