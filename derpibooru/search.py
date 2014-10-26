@@ -22,3 +22,10 @@ class Search(object):
   def comments(self):
     return(self.__comments)
 
+  @property
+  def key(self):
+    return(self.__key)
+
+  @property
+  def fav(self):
+    return(self.__fav)
