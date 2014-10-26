@@ -24,6 +24,12 @@ class Search(object):
 
   @page.setter
   def page(self, page=1):
+    if not isinstance(page, int):
+      raise TypeError("page number must be an int")
+
+    if page < 1:
+      raise ValueError("page number must be greater than 1")
+
     self.__page = page
 
   @property
