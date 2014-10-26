@@ -59,3 +59,14 @@ class Lists(object)
 
     self.__parameters["fav"] = fav
 
+  @property
+  def key(self):
+    return(self.parameters["key"])
+
+  @key.setter
+  def key(self, key=""):
+    if not isinstance(key, str):
+      raise TypeError("key must be a string")
+
+    self.__parameters["key"] = key
+
