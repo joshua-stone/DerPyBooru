@@ -37,4 +37,14 @@ class Lists(object)
 
     self.__parameters["page"] = page
 
+  @property
+  def comments(self):
+    return(self.parameters["comments"])
+
+  @comments.setter
+  def comments(self, comments=True):
+    if not isinstance(comments, bool):
+      raise TypeError("comments must be either True or False")
+
+    self.__parameters["comments"] = comments
 
