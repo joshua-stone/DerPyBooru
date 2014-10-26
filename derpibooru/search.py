@@ -14,9 +14,17 @@ class Search(object):
   def q(self):
     return(self.__q)
 
+  @q.setter
+  def q(self, q=[]):
+    self.__q = q
+
   @property
   def page(self):
     return(self.__page)
+
+  @page.setter
+  def page(self, page=1):
+    self.__page = page
 
   @property
   def comments(self):
