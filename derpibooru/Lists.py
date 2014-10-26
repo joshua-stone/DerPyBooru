@@ -1,11 +1,17 @@
 
-class Lists(object)
+class Lists(object):
 
-  def __init__(self, lists, page=1, last="", comments=False, fav=False, key=""):
+  def __init__(self, list_index=0, page=1, last=(0,"h"), comments=False, fav=False, key=""):
     self.__parameters = {}
+    self.list = list_index
+    self.page = page
+    self.last = last
+    self.comments = comments
+    self.fav = fav
+    self.key = key
 
   @property
-  def hostname()
+  def hostname():
     return("https://derpiboo.ru")
 
   @property
@@ -13,7 +19,7 @@ class Lists(object)
     return(self.__parameters)
 
   @property
-  def lists():
+  def available_lists(self):
     lists = {
       0: "index",
       1: "scoring_scoring",
@@ -22,6 +28,18 @@ class Lists(object)
     }
 
     return(lists)
+
+  @property
+  def list(self):
+    return(self.parameters["list"])
+
+  @list.setter
+  def list(self, list_index=0):
+    if not isinstance(list_index, int):
+      raise TypeError("list value must be an int")
+    if 0 > list_index > 3:
+      raise ValueError("list index needs to be between 0 and 3")
+    self.__parameters["list"] = list_index
 
   @property
   def page(self):
@@ -36,6 +54,23 @@ class Lists(object)
       raise ValueError("page number must be greater than 1")
 
     self.__parameters["page"] = page
+
+  @property
+  def last(self):
+    return(self.parameters["last"])
+
+  @last.setter
+  def last(self, time=(0,"")):
+    if not isinstance(time[0], int):
+      raise TypeError("sampling period duration must be an integer")
+    if not time[0] >= 0:
+      raise ValueError("sampling period duration must be positive")
+    if not isinstance(time[1], str):
+      raise TypeError("sampling period unit must be string")
+    if not time[1] in ("h", "d", "w"):
+      raise ValueError("sampling period unit must be `h', `d', or `w'")
+
+    self.__parameters["last"] = time
 
   @property
   def comments(self):
@@ -69,4 +104,3 @@ class Lists(object)
       raise TypeError("key must be a string")
 
     self.__parameters["key"] = key
-
