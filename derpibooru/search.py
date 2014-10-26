@@ -14,3 +14,11 @@ class Search(object):
   def q(self):
     return(self.__q)
 
+  @property
+  def page(self):
+    return(self.__page)
+
+  @property
+  def comments(self):
+    return(self.__comments)
+
