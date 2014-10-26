@@ -1,7 +1,7 @@
 
 class Lists(object)
 
-  def __init__(self, page=1, last="", comments=False, fav=False, key=""):
+  def __init__(self, lists, page=1, last="", comments=False, fav=False, key=""):
     self.__parameters = {}
 
   @property
@@ -11,6 +11,17 @@ class Lists(object)
   @property
   def parameters(self):
     return(self.__parameters)
+
+  @property
+  def lists():
+    lists = {
+      0: "index",
+      1: "scoring_scoring",
+      2: "all_time_top_scoring",
+      3: "top_commented"
+    }
+
+    return(lists)
 
   @property
   def page(self):
@@ -25,4 +36,5 @@ class Lists(object)
       raise ValueError("page number must be greater than 1")
 
     self.__parameters["page"] = page
+
 
