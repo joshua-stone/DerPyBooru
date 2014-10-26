@@ -75,3 +75,15 @@ class Search(object):
   def fav(self, fav=True):
     self.__fav = fav
 
+  @property
+  def parameters(self):
+    parameters = {
+      "q": self.q,
+      "page": self.page,
+      "comments": self.comments,
+      "fav": self.fav,
+      "key": self.key
+    }
+
+    return(parameters)
+
