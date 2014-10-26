@@ -87,3 +87,22 @@ class Search(object):
 
     return(parameters)
 
+  @property
+  def url(self):
+    parameters = []
+
+    if self.q == []:
+      search = "/images/page/{0}.json?".format(self.page)
+    else:
+      search = "/search.json?"
+      parameters.append("q={0}".format(",".join(self.q)))
+      parameters.append("page={0}".format(self.page))
+
+    if self.comments == True:
+      parameters.append("comments=")
+
+    if self.fav == True:
+      parameters.append("fav=")
+
+    return(self.hostname + search + "&".join(parameters))
+
