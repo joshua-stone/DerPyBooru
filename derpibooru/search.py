@@ -30,10 +30,23 @@ class Search(object):
   def comments(self):
     return(self.__comments)
 
+  @comments.setter
+  def comments(self, comments=True):
+    self.__comments = comments
+
   @property
   def key(self):
     return(self.__key)
 
+  @key.setter
+  def key(self, key=""):
+    self.__key = key
+
   @property
   def fav(self):
     return(self.__fav)
+
+  @fav.setter
+  def fav(self, fav=True):
+    self.__fav = fav
+
