@@ -48,3 +48,14 @@ class Lists(object)
 
     self.__parameters["comments"] = comments
 
+  @property
+  def fav(self):
+    return(self.parameters["fav"])
+
+  @fav.setter
+  def fav(self, fav=True):
+    if not isinstance(fav, bool):
+      raise TypeError("favorites must be either True or False")
+
+    self.__parameters["fav"] = fav
+
