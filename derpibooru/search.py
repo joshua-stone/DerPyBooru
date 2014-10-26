@@ -42,6 +42,21 @@ class Search(object):
 
     self.__page = page
 
+  def next_page(self, number=1):
+    if not isinstance(number, int):
+      raise TypeError("page number must be an int")
+
+    if number < 1:
+      raise ValueError("page number must be greater than 1")
+
+    self.__page += number
+
+  def previous_page(self, number=1):
+    if self.__page - number <= 1:
+      self.__page = 1
+    else:
+      self.__page -= number
+
   @property
   def comments(self):
     return(self.__comments)
