@@ -38,6 +38,9 @@ class Search(object):
 
   @comments.setter
   def comments(self, comments=True):
+    if not isinstance(comments, bool):
+      raise TypeError("comments must be either True or False")
+
     self.__comments = comments
 
   @property
@@ -46,10 +49,16 @@ class Search(object):
 
   @key.setter
   def key(self, key=""):
+    if not isinstance(key, str):
+      raise TypeError("key must be a string") 
+
     self.__key = key
 
   @property
   def fav(self):
+    if not isinstance(fav, bool):
+      raise TypeError("favorites must be either True or False")
+
     return(self.__fav)
 
   @fav.setter
