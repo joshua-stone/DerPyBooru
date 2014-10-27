@@ -11,7 +11,7 @@ class Lists(object):
     self.key = key
 
   @property
-  def hostname():
+  def hostname(self):
     return("https://derpiboo.ru")
 
   @property
@@ -22,7 +22,7 @@ class Lists(object):
   def available_lists(self):
     lists = {
       0: "index",
-      1: "scoring_scoring",
+      1: "top_scoring",
       2: "all_time_top_scoring",
       3: "top_commented"
     }
@@ -104,3 +104,28 @@ class Lists(object):
       raise TypeError("key must be a string")
 
     self.__parameters["key"] = key
+
+  @property
+  def url(self):
+
+    lists, parameters = self.available_lists[self.list], []
+
+    if self.list != 0:
+      parameters.append("page={0}".format(self.page))
+
+    if self.last[0] > 0:
+      parameters.append("last={0}{1}".format(self.last[0], self.last[1]))
+
+    if self.fav == True:
+      parameters.append("fav=")
+
+    if self.comments == True:
+      parameters.append("comments=")
+
+    url = (self.hostname + "/lists/" + lists + ".json")
+
+    if parameters != []:
+      url += ("?" + "&".join(parameters))
+
+    return(url)
+
