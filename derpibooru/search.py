@@ -99,12 +99,12 @@ class Search(object):
   def url(self):
     parameters = []
 
-    if self.parameters["q"] == []:
-      search = "/images/page/{0}.json".format(self.parameters["page"])
+    if self.q == []:
+      search = "/images/page/{0}.json".format(self.page)
     else:
       search = "/search.json"
-      parameters.append("q={0}".format(",".join(self.parameters["q"])))
-      parameters.append("page={0}".format(self.parameters["page"]))
+      parameters.append("q={0}".format(",".join(self.q)))
+      parameters.append("page={0}".format(self.page))
 
     if self.comments == True:
       parameters.append("comments=")
@@ -112,7 +112,10 @@ class Search(object):
     if self.fav == True:
       parameters.append("fav=")
 
-    if parameters == []:
-      return(self.hostname + search)
-    else:
-      return(self.hostname + search + "?" + "&".join(parameters))
+    url = (self.hostname + search)
+
+    if parameters != []:
+      url += ("?" + "&".join(parameters))
+
+    return(url)
+
