@@ -41,7 +41,7 @@ class Search(object):
       if tag == "":
         raise ValueError("empty strings aren't valid tags")
 
-    self.__parameters["q"] = q
+    self.__parameters["q"] = [tag.strip() for tag in q]
 
   @property
   def page(self):
