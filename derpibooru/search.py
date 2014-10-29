@@ -13,10 +13,11 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 class Search(object):
-  def __init__(self, q=[], page=1, comments=False, fav=False, key=""):
+  def __init__(self, q=[], page=1, perpage=15, comments=False, fav=False, key=""):
     self.__parameters = {}
     self.q = q
     self.page = page
+    self.perpage = perpage
     self.comments = comments
     self.fav = fav
     self.key = key
@@ -67,10 +68,29 @@ class Search(object):
     self.__parameters["page"] += number
 
   def previous_page(self, number=1):
+    if not isinstance(number, int):
+      raise TypeError("page number must be an int")
+
+    if number < 1:
+      raise ValueError("page number must be greater than 0")
+
     if self.parameters["page"] - number <= 1:
       self.__parameters["page"] = 1
     else:
       self.__parameters["page"] -= number
+
+  @property
+  def perpage(self):
+    return(self.parameters["perpage"])
+
+  @perpage.setter
+  def perpage(self, page_size):
+    if not isinstance(page_size, int):
+      raise TypeError("perpage must be an int")
+    if page_size < 1 or page_size > 50:
+      raise ValueError("perpage must be within range of 1-50")
+
+    self.__parameters["perpage"] = page_size
 
   @property
   def comments(self):
@@ -126,10 +146,12 @@ class Search(object):
     if self.fav == True:
       parameters.append("fav=")
 
+    parameters.append("perpage={0}".format(self.parameters["perpage"]))
+
     url = (self.hostname + search)
 
     if parameters != []:
-      url += ("?" + "&".join(parameters))
+      url += "?{0}".format("&".join(parameters))
 
     return(url)
 
