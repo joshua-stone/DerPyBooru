@@ -38,8 +38,8 @@ class Search(object):
       if not isinstance(tag, str):
         raise TypeError("{0} is not a string".format(tag))
 
-      if tag == "":
-        raise ValueError("empty strings aren't valid tags")
+      if "," in tag or tag == "":
+        raise ValueError("tags can't contain commas or be empty strings")
 
     self.__parameters["q"] = [tag.strip() for tag in q]
 
@@ -53,7 +53,7 @@ class Search(object):
       raise TypeError("page number must be an int")
 
     if page < 1:
-      raise ValueError("page number must be greater than 1")
+      raise ValueError("page number must be greater than 0")
 
     self.__parameters["page"] = page
 
@@ -62,7 +62,7 @@ class Search(object):
       raise TypeError("page number must be an int")
 
     if number < 1:
-      raise ValueError("page number must be greater than 1")
+      raise ValueError("page number must be greater than 0")
 
     self.__parameters["page"] += number
 
@@ -116,8 +116,8 @@ class Search(object):
     if self.q == []:
       search = "/images/page/{0}.json".format(self.page)
     else:
-      search = "/search.json"
-      parameters.append("q={0}".format(",".join(self.q)))
+      search, tags = "/search.json", ",".join(self.q)
+      parameters.append("q={0}".format(tags.replace(" ", "+")))
       parameters.append("page={0}".format(self.page))
 
     if self.comments == True:
