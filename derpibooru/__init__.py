@@ -24,6 +24,7 @@
 
 from .search import Search
 from .lists import Lists
+from .image import Image
 
 __all__ = [
   "__title__",
