@@ -143,11 +143,11 @@ class Image(object):
 
   @property
   def duplicate_reports(self):
-    return(self.data[""])
+    return(self.data["duplicate_reports"])
 
   @property
   def faves(self):
-    return(self.data[""])
+    return(self.data["faves"])
 
   @property
   def source_url(self):
