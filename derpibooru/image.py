@@ -98,8 +98,36 @@ class Image(object):
     return(self.data["license"])
 
   @property
-  def representations(self):
-    return(self.data[""])
+  def thumb(self):
+    return("https:" + self.data["representations"]["thumb"])
+
+  @property
+  def thumb_tiny(self):
+    return("https:" + self.data["representations"]["thumb_tiny"])
+
+  @property
+  def small(self):
+    return("https:" + self.data["representations"]["small"])
+
+  @property
+  def full(self):
+    return("https:" + self.data["representations"]["full"])
+
+  @property
+  def tall(self):
+    return("https:" + self.data["representations"]["tall"])
+
+  @property
+  def large(self):
+    return("https:" + self.data["representations"]["large"])
+
+  @property
+  def medium(self):
+    return("https:" + self.data["representations"]["medium"])
+
+  @property
+  def thumb_small(self):
+    return("https:" + self.data["representations"]["thumb_small"])
 
   @property
   def image(self):
