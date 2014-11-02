@@ -23,12 +23,11 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 class Index(object):
-  def__init__(self, id_number, comments=False, fav=False):
-    self.parameters = {}
+  def __init__(self, id_number, comments=False, fav=False):
+    self.__parameters = {}
     self.id_number = id_number
-    self.comments = False
-    self.fav = False
-  def
+    self.comments = comments
+    self.fav = fav
 
   @property
   def hostname(self):
@@ -40,7 +39,7 @@ class Index(object):
 
   @id_number.setter
   def id_number(self, id_number):
-    if not isinstance(comments, int):
+    if not isinstance(id_number, int):
       raise TypeError("image ID number must be either a positive int")
     if id_number < 1:
       raise ValueError("image ID number can't be less than 1")
@@ -72,4 +71,21 @@ class Index(object):
   @property
   def parameters(self):
     return(self.__parameters)
+
+  @property
+  def url(self):
+    url, parameters = "{0}/{1}.json".format(self.hostname, self.id_number), []
+
+    if self.comments == True:
+      parameters.append("comments=")
+
+    if self.fav == True:
+      parameters.append("fav=")
+
+    if parameters != []:
+     url += "?{0}".format("&".join(parameters))
+
+    return(url)
+
+   
 
