@@ -13,7 +13,11 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 class Image(object):
-
+  """
+  This class provides a thin wrapper around JSON data, mapping each value to
+  its own property. Once instantiated the data is immutable so as to reflect
+  the stateless nature of a REST API
+  """
   def __init__(self, data):
     self.__data = data
 
@@ -160,3 +164,4 @@ class Image(object):
   @property
   def data(self):
     return(self.__data)
+
