@@ -97,7 +97,7 @@ class Search(object):
   def perpage(self, page_size):
     if not isinstance(page_size, int):
       raise TypeError("perpage must be an int")
-    if page_size < 1 or page_size > 50:
+    if page_size not in range(1,51):
       raise ValueError("perpage must be within range of 1-50")
 
     self.__parameters["perpage"] = page_size
