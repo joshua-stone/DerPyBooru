@@ -26,6 +26,7 @@ from .search import Search
 from .lists import Lists
 from .image import Image
 from .index import Index
+from .watched import Watched
 
 __all__ = [
   "__title__",
