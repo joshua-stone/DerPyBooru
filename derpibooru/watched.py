@@ -1,6 +1,6 @@
 
 class Watched(object):
-  def __init__(self, key, page=1, perpage=15, comments=True, fav=True):
+  def __init__(self, key, page=1, perpage=15, comments=False, fav=False):
     self.__parameters = {}
     self.key = key
     self.page = page
@@ -66,7 +66,7 @@ class Watched(object):
   def perpage(self, page_size):
     if not isinstance(page_size, int):
       raise TypeError("perpage must be an int")
-    if page_size < 1 or page_size > 50:
+    if page_size not in range(1, 51):
       raise ValueError("perpage must be within range of 1-50")
 
     self.__parameters["perpage"] = page_size
@@ -97,3 +97,19 @@ class Watched(object):
   def parameters(self):
     return(self.__parameters)
 
+  @property
+  def url(self):
+    url, parameters = self.hostname + "images/watched.json", []
+    
+    parameters.append("key={0}".format(self.key))
+    parameters.append("perpage={0}".format(self.perpage))
+    parameters.append("page={0}".format(self.page))
+
+    if self.comments == True:
+      parameters.append("comments=")
+    if self.fav == True:
+      parameters.append("fav=")
+
+    url += "?{0}".format("&".join(parameters))
+
+    return(url)
