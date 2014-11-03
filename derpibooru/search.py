@@ -165,3 +165,15 @@ class Search(object):
 
     return(url)
 
+  @property
+  def random(self):
+    if not self.q:
+      url = "https://derpiboo.ru/images/random.json"
+    else:
+      url = "https://derpiboo.ru/search.json?random_image=y"
+
+      tags = ",".join(self.q)
+
+      url += "&q={0}".format(tags.replace(" ", "+"))
+
+    return(url)
