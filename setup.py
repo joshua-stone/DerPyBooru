@@ -15,6 +15,7 @@ setup(
   license = "Simplified BSD License",
   copyright = "Copyright 2014 Joshua Stone",
   platforms = ["any"],
+  packages = find_packages(),
   include_package_data = True,
   classifiers = [
     "Intended Audience :: Developers",
