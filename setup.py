@@ -19,7 +19,7 @@ setup(
   license = "Simplified BSD License",
   copyright = "Copyright 2014 Joshua Stone",
   platforms = ["any"],
-  include_package_data = True
+  include_package_data = True,
   classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
