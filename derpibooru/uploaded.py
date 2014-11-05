@@ -5,11 +5,11 @@
 # modification, are permitted provided that the following conditions are met:
 #
 # * Redistributions of source code must retain the above copyright notice, this
-#  list of conditions and the following disclaimer.
+#   list of conditions and the following disclaimer.
 #
 # * Redistributions in binary form must reproduce the above copyright notice,
-#  this list of conditions and the following disclaimer in the documentation
-#  and/or other materials provided with the distribution.
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -22,31 +22,36 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .search import Search
-from .lists import Lists
-from .image import Image
-from .index import Index
-from .watched import Watched
-from .uploaded import Uploaded
+from .user import User
 
-__all__ = [
-  "__title__",
-  "__summary__",
-  "__uri__",
-  "__version__",
-  "__author__",
-  "__email__",
-  "__license__",
-  "__copyright__"
-]
+class Uploaded(User):
+  """
+  This is the base class in which other classes centered around user data will
+  inherit since their URL parameters so similar
+  """
+  def __init__(self, key, page=1, perpage=15, comments=False, fav=False):
+    User.__init__(self, key, page, perpage, comments, fav)
 
-__title__ = "PyDerpibooru"
-__summary__ = "Python wrapper for Derpibooru's API"
-__uri__ = "https://github.com/joshua-stone"
-__version__ = "0.1"
+  @property
+  def url(self):
+    url, parameters = self.hostname + "/images/uploaded.json", []
 
-__author__ = "Joshua Stone"
-__email__ = "joshua.gage.stone@gmail.com"
+    parameters.append("key={0}".format(self.key))
+    parameters.append("perpage={0}".format(self.perpage))
+    parameters.append("page={0}".format(self.page))
 
-__license__ = "Simplified BSD License"
-__copyright__ = "Copyright 2014 Joshua Stone"
+    if self.comments == True:
+      parameters.append("comments=")
+    if self.fav == True:
+      parameters.append("fav=")
+
+    url += "?{0}".format("&".join(parameters))
+
+    return(url)
+
+  @property
+  def random(self):
+    url = self.hostname + "/images/uploaded.json?random=y&key=" + self.key
+
+    return(url)
+
