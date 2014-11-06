@@ -26,6 +26,12 @@ from .parameters import Parameters
 
 class Watched(Parameters):
   def __init__(self, key, page=1, perpage=15, comments=False, fav=False):
+    if not isinstance(key, str):
+      raise TypeError("API key must be a string")
+
+    if key == "":
+      raise ValueError("API key can't be empty")
+
     Parameters.__init__(self, key, page, perpage, comments, fav)
 
   @property
@@ -52,8 +58,14 @@ class Watched(Parameters):
     return(url)
 
 class Watched_User(Parameters):
-  def __init__(self, key, page=1, perpage=15, comments=False, fav=False):
-    Parameters.__init__(self, key, page, perpage, comments, fav)
+  def __init__(self, user_id, page=1, perpage=15, comments=False, fav=False):
+    if not isinstance(user_id, str):
+      raise TypeError("API key must be a string")
+
+    if user_id == "":
+      raise ValueError("API key can't be empty")
+
+    Parameters.__init__(self, user_id, page, perpage, comments, fav)
 
   @property
   def url(self):
