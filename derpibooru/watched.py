@@ -22,71 +22,43 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .parameters import Parameters
+def watched(hostname, key, perpage, page, comments, fav):
+  url = watched_url(hostname, "key", key, perpage, page, comments, fav)
 
-class Watched(Parameters):
-  def __init__(self, key, page=1, perpage=15, comments=False, fav=False):
-    if not isinstance(key, str):
-      raise TypeError("API key must be a string")
+  return(url)
 
-    if key == "":
-      raise ValueError("API key can't be empty")
+def watched_random(hostname, key):
+  url = watched_random_url(hostname, "key", key)
 
-    super(Watched, self).__init__(key, page, perpage, comments, fav)
+  return(url)
 
-  @property
-  def url(self):
-    url, parameters = self.hostname + "/images/watched.json", []
+def watched_user(hostname, user_id, perpage, page, comments, fav):
+  url = watched_url(hostname, "user_id", user_id, perpage, page, comments, fav)
 
-    parameters.append("key={0}".format(self.key))
-    parameters.append("perpage={0}".format(self.perpage))
-    parameters.append("page={0}".format(self.page))
+  return(url)
 
-    if self.comments == True:
-      parameters.append("comments=")
-    if self.fav == True:
-      parameters.append("fav=")
+def watched_user_random(hostname, user_id):
+  url = watched_random_url(hostname, "user_id", user_id)
 
-    url += "?{0}".format("&".join(parameters))
+  return(url)
 
-    return(url)
+def watched_url(hostname, key, value, perpage, page, comments, fav):
+  url, parameters = hostname + "/images/watched.json", []
 
-  @property
-  def random(self):
-    url = self.hostname + "/images/watched.json?random=y&key=" + self.key
+  parameters.append("{0}={1}".format(key, value))
+  parameters.append("perpage={0}".format(perpage))
+  parameters.append("page={0}".format(page))
 
-    return(url)
+  if comments == True:
+    parameters.append("comments=")
+  if fav == True:
+    parameters.append("fav=")
 
-class Watched_User(Parameters):
-  def __init__(self, user_id, page=1, perpage=15, comments=False, fav=False):
-    if not isinstance(user_id, str):
-      raise TypeError("user ID must be a string")
+  url += "?{0}".format("&".join(parameters))
 
-    if user_id == "":
-      raise ValueError("user ID can't be empty")
+  return(url)
 
-    super(Watched_User, self).__init__(user_id, page, perpage, comments, fav)
+def watched_random_url(hostname, key, value):
+  url = "{0}/images/watched.json?random=y&{1}={2}".format(hostname, key, value)
 
-  @property
-  def url(self):
-    url, parameters = self.hostname + "/images/watched.json", []
-
-    parameters.append("user_id={0}".format(self.key))
-    parameters.append("perpage={0}".format(self.perpage))
-    parameters.append("page={0}".format(self.page))
-
-    if self.comments == True:
-      parameters.append("comments=")
-    if self.fav == True:
-      parameters.append("fav=")
-
-    url += "?{0}".format("&".join(parameters))
-
-    return(url)
-
-  @property
-  def random(self):
-    url = self.hostname + "/images/watched.json?random=y&user_id=" + self.key
-
-    return(url)
-
+  return(url)

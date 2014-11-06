@@ -1,10 +1,12 @@
 from .search import search, search_random
+from .watched import watched, watched_random, watched_user, watched_user_random
 
 class Derpibooru(object):
   def __init__(self, q=[], key="", user_id="", perpage=15, comments=False, fav=False):
     self._parameters = {}
     self.q = q
     self.key = key
+    self.user_id = user_id
     self.perpage = perpage
     self.comments = comments
     self.fav = fav
@@ -41,6 +43,17 @@ class Derpibooru(object):
       raise TypeError("key must be a string")
 
     self._parameters["key"] = key
+
+  @property
+  def user_id(self):
+    return(self.parameters["user_id"])
+
+  @user_id.setter
+  def user_id(self, user_id=""):
+    if not isinstance(user_id, str):
+      raise TypeError("user ID must be a string")
+
+    self._parameters["user_id"] = user_id
 
   @property
   def perpage(self):
@@ -86,3 +99,27 @@ class Derpibooru(object):
 
     return(url)
 
+  def search_random(self):
+    url = search_random(self.hostname, self.q)
+
+    return(url)
+
+  def watched(self):
+    url = watched(self.hostname, self.key, self.perpage, 1, self.comments, self.fav)
+
+    return(url)
+
+  def watched_random(self):
+    url = watched_random(self.hostname, self.key)
+
+    return(url)
+
+  def watched_user(self):
+    url = watched_user(self.hostname, self.user_id, self.perpage, 1, self.comments, self.fav)
+
+    return(url)
+
+  def watched_user_random(self):
+    url = watched_user_random(self.hostname, self.user_id)
+
+    return(url) 

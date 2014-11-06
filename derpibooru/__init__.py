@@ -22,13 +22,15 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .search import Search
-from .lists import Top_Scoring, All_Time_Top_Scoring, Top_Commented
-from .image import Image
-from .index import Index
-from .watched import Watched, Watched_User
-from .uploaded import Uploaded, Uploaded_User
-from .faves import Faves, Faves_User
+#from .search import search
+#from .lists import Top_Scoring, All_Time_Top_Scoring, Top_Commented
+#from .image import Image
+#from .index import Index
+#from .watched import Watched, Watched_User
+#from .uploaded import Uploaded, Uploaded_User
+#from .faves import Faves, Faves_User
+
+from .derpibooru import Derpibooru
 
 __all__ = [
   "__title__",
