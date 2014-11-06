@@ -50,3 +50,31 @@ class Watched(Parameters):
     url = self.hostname + "/images/watched.json?random=y&key=" + self.key
 
     return(url)
+
+class Watched_User(Parameters):
+  def __init__(self, key, page=1, perpage=15, comments=False, fav=False):
+    Parameters.__init__(self, key, page, perpage, comments, fav)
+
+  @property
+  def url(self):
+    url, parameters = self.hostname + "/images/watched.json", []
+
+    parameters.append("user_id={0}".format(self.key))
+    parameters.append("perpage={0}".format(self.perpage))
+    parameters.append("page={0}".format(self.page))
+
+    if self.comments == True:
+      parameters.append("comments=")
+    if self.fav == True:
+      parameters.append("fav=")
+
+    url += "?{0}".format("&".join(parameters))
+
+    return(url)
+
+  @property
+  def random(self):
+    url = self.hostname + "/images/watched.json?random=y&user_id=" + self.key
+
+    return(url)
+

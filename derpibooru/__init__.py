@@ -26,9 +26,9 @@ from .search import Search
 from .lists import Lists
 from .image import Image
 from .index import Index
-from .watched import Watched
-from .uploaded import Uploaded
-from .faves import Faves
+from .watched import Watched, Watched_User
+from .uploaded import Uploaded, Uploaded_User
+from .faves import Faves, Faves_User
 
 __all__ = [
   "__title__",
