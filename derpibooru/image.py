@@ -30,6 +30,9 @@ class Image(object):
   """
   def __init__(self, data):
     self.__data = data
+  
+  def __str__(self):
+    return("Image({0})".format(self.data["id_number"]))
 
   @property
   def id(self):

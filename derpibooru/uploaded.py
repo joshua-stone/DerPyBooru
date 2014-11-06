@@ -22,15 +22,11 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .user import User
+from .parameters import Parameters
 
-class Uploaded(User):
-  """
-  This is the base class in which other classes centered around user data will
-  inherit since their URL parameters so similar
-  """
+class Uploaded(Parameters):
   def __init__(self, key, page=1, perpage=15, comments=False, fav=False):
-    User.__init__(self, key, page, perpage, comments, fav)
+    Parameters.__init__(self, key, page, perpage, comments, fav)
 
   @property
   def url(self):

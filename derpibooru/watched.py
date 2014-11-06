@@ -22,16 +22,16 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .user import User
+from .parameters import Parameters
 
-class Watched(User):
+class Watched(Parameters):
   def __init__(self, key, page=1, perpage=15, comments=False, fav=False):
-    User.__init__(self, key, page, perpage, comments, fav)
+    Parameters.__init__(self, key, page, perpage, comments, fav)
 
   @property
   def url(self):
     url, parameters = self.hostname + "/images/watched.json", []
-    
+
     parameters.append("key={0}".format(self.key))
     parameters.append("perpage={0}".format(self.perpage))
     parameters.append("page={0}".format(self.page))
