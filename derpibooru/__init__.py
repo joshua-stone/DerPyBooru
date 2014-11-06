@@ -23,7 +23,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from .search import Search
-from .lists import Lists
+from .lists import Top_Scoring, All_Time_Top_Scoring, Top_Commented
 from .image import Image
 from .index import Index
 from .watched import Watched, Watched_User
