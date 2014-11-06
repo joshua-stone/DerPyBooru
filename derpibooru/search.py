@@ -22,66 +22,42 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .parameters import Parameters
+def search(hostname, q, page, perpage, comments, fav):
+  url, parameters = hostname, []
 
-class Search(Parameters):
-  def __init__(self, q=[], page=1, perpage=15, comments=False, fav=False, key=""):
-    super(Search, self).__init__(key, page, perpage, comments, fav)
-    self.q = q
+  if q == []:
+    search = "/images/page/{0}.json".format(page)
+  else:
+    search, tags = "/search.json", ",".join(q)
+    parameters.append("q={0}".format(tags.replace(" ", "+")))
+    parameters.append("page={0}".format(page))
 
-  @property
-  def q(self):
-    return(self._parameters["q"])
+  if comments == True:
+    parameters.append("comments=")
 
-  @q.setter
-  def q(self, q=[]):
-    if not isinstance(q, list):
-      raise TypeError("tags must be a list of strings")
+  if fav == True:
+    parameters.append("fav=")
 
-    for tag in q:
-      if not isinstance(tag, str):
-        raise TypeError("{0} is not a string".format(tag))
+  parameters.append("perpage={0}".format(perpage))
 
-      if "," in tag or tag == "":
-        raise ValueError("tags can't contain commas or be empty strings")
+  url += search
 
-    self._parameters["q"] = [tag.strip() for tag in q]
+  if parameters != []:
+    url += "?{0}".format("&".join(parameters))
 
-  @property
-  def url(self):
-    parameters = []
+  return(url)
 
-    if self.q == []:
-      search = "/images/page/{0}.json".format(self.page)
-    else:
-      search, tags = "/search.json", ",".join(self.q)
-      parameters.append("q={0}".format(tags.replace(" ", "+")))
-      parameters.append("page={0}".format(self.page))
+def search_random(hostname, q):
+  url = hostname
 
-    if self.comments == True:
-      parameters.append("comments=")
+  if q == []:
+    url += "/images/random.json"
+  else:
+    url += "/search.json?random_image=y"
 
-    if self.fav == True:
-      parameters.append("fav=")
+    tags = ",".join(q)
 
-    parameters.append("perpage={0}".format(self.perpage))
+    url += "&q={0}".format(tags.replace(" ", "+"))
 
-    url = (self.hostname + search)
+  return(url)
 
-    if parameters != []:
-      url += "?{0}".format("&".join(parameters))
-
-    return(url)
-
-  @property
-  def random(self):
-    if not self.q:
-      url = "https://derpiboo.ru/images/random.json"
-    else:
-      url = "https://derpiboo.ru/search.json?random_image=y"
-
-      tags = ",".join(self.q)
-
-      url += "&q={0}".format(tags.replace(" ", "+"))
-
-    return(url)
