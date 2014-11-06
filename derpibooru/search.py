@@ -26,12 +26,12 @@ from .parameters import Parameters
 
 class Search(Parameters):
   def __init__(self, q=[], page=1, perpage=15, comments=False, fav=False, key=""):
-    Parameters.__init__(self, key, page, perpage, comments, fav)
+    super(Search, self).__init__(key, page, perpage, comments, fav)
     self.q = q
 
   @property
   def q(self):
-    return(self.__q)
+    return(self._parameters["q"])
 
   @q.setter
   def q(self, q=[]):
@@ -45,7 +45,7 @@ class Search(Parameters):
       if "," in tag or tag == "":
         raise ValueError("tags can't contain commas or be empty strings")
 
-    self.__q = [tag.strip() for tag in q]
+    self._parameters["q"] = [tag.strip() for tag in q]
 
   @property
   def url(self):

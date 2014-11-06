@@ -28,7 +28,7 @@ class Parameters(object):
   inherit since their URL parameters so similar
   """
   def __init__(self, key, page=1, perpage=15, comments=False, fav=False):
-    self.__parameters = {}
+    self._parameters = {}
     self.key = key
     self.page = page
     self.perpage = perpage
@@ -48,7 +48,7 @@ class Parameters(object):
     if not isinstance(key, str):
       raise TypeError("key must be a string")
 
-    self.__parameters["key"] = key
+    self._parameters["key"] = key
 
   def next_page(self, number=1):
     if not isinstance(number, int):
@@ -57,7 +57,7 @@ class Parameters(object):
     if number < 1:
       raise ValueError("page number must be greater than 0")
 
-    self.__parameters["page"] += number
+    self._parameters["page"] += number
 
   def previous_page(self, number=1):
     if not isinstance(number, int):
@@ -67,9 +67,9 @@ class Parameters(object):
       raise ValueError("page number must be greater than 0")
 
     if self.parameters["page"] - number <= 1:
-      self.__parameters["page"] = 1
+      self._parameters["page"] = 1
     else:
-      self.__parameters["page"] -= number
+      self._parameters["page"] -= number
 
   @property
   def perpage(self):
@@ -82,7 +82,7 @@ class Parameters(object):
     if page_size not in range(1, 51):
       raise ValueError("perpage must be within range of 1-50")
 
-    self.__parameters["perpage"] = page_size
+    self._parameters["perpage"] = page_size
 
   @property
   def comments(self):
@@ -93,7 +93,7 @@ class Parameters(object):
     if not isinstance(comments, bool):
       raise TypeError("comments must be either True or False")
 
-    self.__parameters["comments"] = comments
+    self._parameters["comments"] = comments
 
   @property
   def fav(self):
@@ -104,9 +104,9 @@ class Parameters(object):
     if not isinstance(fav, bool):
       raise TypeError("favorites must be either True or False")
 
-    self.__parameters["fav"] = fav
+    self._parameters["fav"] = fav
 
   @property
   def parameters(self):
-    return(self.__parameters)
+    return(self._parameters)
 
