@@ -22,43 +22,25 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+from .urls import images, images_random
+
 def watched(hostname, key, perpage, page, comments, fav):
-  url = watched_url(hostname, "key", key, perpage, page, comments, fav)
+  url = images(hostname, "watched", "key", key, perpage, page, comments, fav)
 
   return(url)
 
 def watched_random(hostname, key):
-  url = watched_random_url(hostname, "key", key)
+  url = images_random(hostname, "watched", "key", key)
 
   return(url)
 
 def watched_user(hostname, user_id, perpage, page, comments, fav):
-  url = watched_url(hostname, "user_id", user_id, perpage, page, comments, fav)
+  url = images(hostname, "watched", "user_id", user_id, perpage, page, comments, fav)
 
   return(url)
 
 def watched_user_random(hostname, user_id):
-  url = watched_random_url(hostname, "user_id", user_id)
+  url = images_random(hostname, "watched", "user_id", user_id)
 
   return(url)
 
-def watched_url(hostname, key, value, perpage, page, comments, fav):
-  url, parameters = hostname + "/images/watched.json", []
-
-  parameters.append("{0}={1}".format(key, value))
-  parameters.append("perpage={0}".format(perpage))
-  parameters.append("page={0}".format(page))
-
-  if comments == True:
-    parameters.append("comments=")
-  if fav == True:
-    parameters.append("fav=")
-
-  url += "?{0}".format("&".join(parameters))
-
-  return(url)
-
-def watched_random_url(hostname, key, value):
-  url = "{0}/images/watched.json?random=y&{1}={2}".format(hostname, key, value)
-
-  return(url)

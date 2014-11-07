@@ -22,70 +22,25 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .parameters import Parameters
+from .urls import images, images_random
 
-class Faves(Parameters):
-  def __init__(self, key, page=1, perpage=15, comments=False, fav=False):
-    if not isinstance(key, str):
-      raise TypeError("API key must be a string")
+def faves(hostname, key, perpage, page, comments, fav):
+  url = images(hostname, "favourites", "key", key, perpage, page, comments, fav)
 
-    if key == "":
-      raise ValueError("API key can't be empty")
+  return(url)
 
-    super(Faves, self).__init__(key, page, perpage, comments, fav)
+def faves_random(hostname, key):
+  url = images_random(hostname, "favourites", "key", key)
 
-  @property
-  def url(self):
-    url, parameters = self.hostname + "/images/favourites.json", []
-    
-    parameters.append("key={0}".format(self.key))
-    parameters.append("perpage={0}".format(self.perpage))
-    parameters.append("page={0}".format(self.page))
+  return(url)
 
-    if self.comments == True:
-      parameters.append("comments=")
-    if self.fav == True:
-      parameters.append("fav=")
+def faves_user(hostname, user_id, perpage, page, comments, fav):
+  url = images(hostname, "favourites", "user_id", user_id, perpage, page, comments, fav)
 
-    url += "?{0}".format("&".join(parameters))
+  return(url)
 
-    return(url)
+def faves_user_random(hostname, user_id):
+  url = images_random(hostname, "favourites", "user_id", user_id)
 
-  @property
-  def random(self):
-    url = self.hostname + "/images/favourites.json?random=y&key=" + self.key
+  return(url)
 
-    return(url)
-
-class Faves_User(Parameters):
-  def __init__(self, user_id, page=1, perpage=15, comments=False, fav=False):
-    if not isinstance(user_id, str):
-      raise TypeError("user ID must be a string")
-
-    if user_id == "":
-      raise ValueError("user ID can't be empty")
-
-    super(Faves_User, self).__init__(user_id, page, perpage, comments, fav)
-
-  @property
-  def url(self):
-    url, parameters = self.hostname + "/images/favourites.json", []
-
-    parameters.append("user_id={0}".format(self.key))
-    parameters.append("perpage={0}".format(self.perpage))
-    parameters.append("page={0}".format(self.page))
-
-    if self.comments == True:
-      parameters.append("comments=")
-    if self.fav == True:
-      parameters.append("fav=")
-
-    url += "?{0}".format("&".join(parameters))
-
-    return(url)
-
-  @property
-  def random(self):
-    url = self.hostname + "/images/favourites.json?random=y&user_id=" + self.key
-
-    return(url)

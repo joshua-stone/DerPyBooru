@@ -1,8 +1,35 @@
+# Copyright (c) 2014, Joshua Stone
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 from .search import search, search_random
 from .watched import watched, watched_random, watched_user, watched_user_random
+from .faves import faves, faves_random, faves_user, faves_user_random
+from .uploaded import uploaded, uploaded_random, uploaded_user, uploaded_user_random
+from .lists import top_scoring, all_time_top_scoring, top_commented
 
 class Derpibooru(object):
-  def __init__(self, q=[], key="", user_id="", perpage=15, comments=False, fav=False):
+  def __init__(self, q=[], key="", user_id="", perpage=15, comments=False, fav=False, last=(0,"h")):
     self._parameters = {}
     self.q = q
     self.key = key
@@ -10,6 +37,7 @@ class Derpibooru(object):
     self.perpage = perpage
     self.comments = comments
     self.fav = fav
+    self.last = last
 
   @property
   def hostname(self):
@@ -91,6 +119,23 @@ class Derpibooru(object):
     self._parameters["fav"] = fav
 
   @property
+  def last(self):
+    return(self.parameters["last"])
+
+  @last.setter
+  def last(self, time=(0,"")):
+    if not isinstance(time[0], int):
+      raise TypeError("sampling period duration must be an integer")
+    if not time[0] >= 0:
+      raise ValueError("sampling period duration must be positive")
+    if not isinstance(time[1], str):
+      raise TypeError("sampling period unit must be string")
+    if not time[1] in ("h", "d", "w"):
+      raise ValueError("sampling period unit must be `h', `d', or `w'")
+
+    self._parameters["last"] = time
+
+  @property
   def parameters(self):
     return(self._parameters)
 
@@ -122,4 +167,62 @@ class Derpibooru(object):
   def watched_user_random(self):
     url = watched_user_random(self.hostname, self.user_id)
 
-    return(url) 
+    return(url)
+
+  def faves(self):
+    url = faves(self.hostname, self.key, self.perpage, 1, self.comments, self.fav)
+
+    return(url)
+
+  def faves_random(self):
+    url = faves_random(self.hostname, self.key)
+
+    return(url)
+
+  def faves_user(self):
+    url = faves_user(self.hostname, self.user_id, self.perpage, 1, self.comments, self.fav)
+
+    return(url)
+
+  def faves_user_random(self):
+    url = faves_user_random(self.hostname, self.user_id)
+
+    return(url)
+
+
+  def uploaded(self):
+    url = uploaded(self.hostname, self.key, self.perpage, 1, self.comments, self.fav)
+
+    return(url)
+
+  def uploaded_random(self):
+    url = uploaded_random(self.hostname, self.key)
+
+    return(url)
+
+  def uploaded_user(self):
+    url = uploaded_user(self.hostname, self.user_id, self.perpage, 1, self.comments, self.fav)
+
+    return(url)
+
+  def uploaded_user_random(self):
+    url = uploaded_user_random(self.hostname, self.user_id)
+
+    return(url)
+
+  def top_scoring(self):
+    url = top_scoring(self.hostname, self.key, 1, self.perpage, self.last[0], self.last[1])
+
+    return(url)
+
+  def all_time_top_scoring(self):
+    url = all_time_top_scoring(self.hostname, self.key, 1, self.perpage, self.last[0], self.last[1])
+
+    return(url)
+
+
+  def top_commented(self):
+    url = top_commented(self.hostname, self.key, 1, self.perpage, self.last[0], self.last[1])
+
+    return(url)
+

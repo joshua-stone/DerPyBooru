@@ -22,140 +22,35 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .parameters import Parameters
+from .urls import lists
 
-class Top_Scoring(Parameters):
+def top_scoring(hostname, key, page, perpage, duration, unit):
+  url = lists(hostname, "top_scoring", page, perpage, duration, unit)
 
-  def __init__(self, last=(0,"h"), page=1, perpage=15, comments=False, fav=False, key=""):
-    super(Top_Scoring, self).__init__(key, page, perpage, comments, fav)
-    self.last = last
+  return(url)
 
-  @property
-  def last(self):
-    return(self.parameters["last"])
+def top_scoring_random(hostname, key):
+  url = lists_random(hostname, "top_scoring", key)
 
-  @last.setter
-  def last(self, time=(0,"")):
-    if not isinstance(time[0], int):
-      raise TypeError("sampling period duration must be an integer")
-    if not time[0] >= 0:
-      raise ValueError("sampling period duration must be positive")
-    if not isinstance(time[1], str):
-      raise TypeError("sampling period unit must be string")
-    if not time[1] in ("h", "d", "w"):
-      raise ValueError("sampling period unit must be `h', `d', or `w'")
+  return(url)
 
-    self._parameters["last"] = time
+def all_time_top_scoring(hostname, key, page, perpage, duration, unit):
+  url = lists(hostname, "all_time_top_scoring", page, perpage, duration, unit)
 
-  @property
-  def url(self):
-    parameters = []
+  return(url)
 
-    parameters.append("page={0}".format(self.page))
+def all_time_top_scoring_random(hostname, key):
+  url = lists_random(hostname, "all_time_top_scoring", key)
 
-    if self.last[0] > 0:
-      parameters.append("last={0}{1}".format(self.last[0], self.last[1]))
+  return(url)
 
-    if self.fav == True:
-      parameters.append("fav=")
+def top_commented(hostname, key, page, perpage, duration, unit):
+  url = lists(hostname, "top_commented", page, perpage, duration, unit)
 
-    if self.comments == True:
-      parameters.append("comments=")
+  return(url)
 
-    url = (self.hostname + "/lists/top_scoring.json")
+def top_commented_random(hostname, key):
+  url = lists_random(hostname, "top_commented", key)
 
-    if parameters != []:
-      url += ("?" + "&".join(parameters))
-
-    return(url)
-
-class All_Time_Top_Scoring(Parameters):
-
-  def __init__(self, last=(0,"h"), page=1, perpage=15, comments=False, fav=False, key=""):
-    super(All_Time_Top_Scoring, self).__init__(key, page, perpage, comments, fav)
-    self.last = last
-
-  @property
-  def last(self):
-    return(self.parameters["last"])
-
-  @last.setter
-  def last(self, time=(0,"")):
-    if not isinstance(time[0], int):
-      raise TypeError("sampling period duration must be an integer")
-    if not time[0] >= 0:
-      raise ValueError("sampling period duration must be positive")
-    if not isinstance(time[1], str):
-      raise TypeError("sampling period unit must be string")
-    if not time[1] in ("h", "d", "w"):
-      raise ValueError("sampling period unit must be `h', `d', or `w'")
-
-    self._parameters["last"] = time
-
-  @property
-  def url(self):
-    parameters = []
-
-    parameters.append("page={0}".format(self.page))
-
-    if self.last[0] > 0:
-      parameters.append("last={0}{1}".format(self.last[0], self.last[1]))
-
-    if self.fav == True:
-      parameters.append("fav=")
-
-    if self.comments == True:
-      parameters.append("comments=")
-
-    url = (self.hostname + "/lists/all_time_top_scoring.json")
-
-    if parameters != []:
-      url += ("?" + "&".join(parameters))
-
-    return(url)
-
-class Top_Commented(Parameters):
-
-  def __init__(self, last=(0,"h"), page=1, perpage=15, comments=False, fav=False, key=""):
-    super(Top_Commented, self).__init__(key, page, perpage, comments, fav)
-    self.last = last
-
-  @property
-  def last(self):
-    return(self.parameters["last"])
-
-  @last.setter
-  def last(self, time=(0,"")):
-    if not isinstance(time[0], int):
-      raise TypeError("sampling period duration must be an integer")
-    if not time[0] >= 0:
-      raise ValueError("sampling period duration must be positive")
-    if not isinstance(time[1], str):
-      raise TypeError("sampling period unit must be string")
-    if not time[1] in ("h", "d", "w"):
-      raise ValueError("sampling period unit must be `h', `d', or `w'")
-
-    self._parameters["last"] = time
-
-  @property
-  def url(self):
-    parameters = []
-
-    parameters.append("page={0}".format(self.page))
-
-    if self.last[0] > 0:
-      parameters.append("last={0}{1}".format(self.last[0], self.last[1]))
-
-    if self.fav == True:
-      parameters.append("fav=")
-
-    if self.comments == True:
-      parameters.append("comments=")
-
-    url = (self.hostname + "/lists/top_commented.json")
-
-    if parameters != []:
-      url += ("?" + "&".join(parameters))
-
-    return(url)
+  return(url)
 
