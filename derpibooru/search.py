@@ -45,9 +45,9 @@ def search(hostname, q, page, perpage, comments, fav):
   if parameters != []:
     url += "?{0}".format("&".join(parameters))
 
-  return(url)
+  return url
 
-def search_random(hostname, q):
+def search_random(hostname, q, key):
   url = hostname
 
   if q == []:
@@ -59,5 +59,8 @@ def search_random(hostname, q):
 
     url += "&q={0}".format(tags.replace(" ", "+"))
 
-  return(url)
+  if key != "":
+    url += "&key={0}".format(key)
+
+  return url
 

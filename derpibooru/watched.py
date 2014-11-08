@@ -27,20 +27,20 @@ from .urls import images, images_random
 def watched(hostname, key, perpage, page, comments, fav):
   url = images(hostname, "watched", "key", key, perpage, page, comments, fav)
 
-  return(url)
+  return url
 
 def watched_random(hostname, key):
   url = images_random(hostname, "watched", "key", key)
 
-  return(url)
+  return url
 
 def watched_user(hostname, user_id, perpage, page, comments, fav):
   url = images(hostname, "watched", "user_id", user_id, perpage, page, comments, fav)
 
-  return(url)
+  return url
 
 def watched_user_random(hostname, user_id):
   url = images_random(hostname, "watched", "user_id", user_id)
 
-  return(url)
+  return url
 

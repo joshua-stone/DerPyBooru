@@ -22,35 +22,35 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .urls import lists
+from .urls import lists, lists_random
 
 def top_scoring(hostname, key, page, perpage, duration, unit):
   url = lists(hostname, "top_scoring", page, perpage, duration, unit)
 
-  return(url)
+  return url
 
 def top_scoring_random(hostname, key):
   url = lists_random(hostname, "top_scoring", key)
 
-  return(url)
+  return url
 
 def all_time_top_scoring(hostname, key, page, perpage, duration, unit):
   url = lists(hostname, "all_time_top_scoring", page, perpage, duration, unit)
 
-  return(url)
+  return url
 
 def all_time_top_scoring_random(hostname, key):
   url = lists_random(hostname, "all_time_top_scoring", key)
 
-  return(url)
+  return url
 
 def top_commented(hostname, key, page, perpage, duration, unit):
   url = lists(hostname, "top_commented", page, perpage, duration, unit)
 
-  return(url)
+  return url
 
 def top_commented_random(hostname, key):
   url = lists_random(hostname, "top_commented", key)
 
-  return(url)
+  return url
 

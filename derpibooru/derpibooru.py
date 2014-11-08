@@ -27,7 +27,7 @@ from .watched import watched, watched_random, watched_user, watched_user_random
 from .faves import faves, faves_random, faves_user, faves_user_random
 from .uploaded import uploaded, uploaded_random, uploaded_user, uploaded_user_random
 from .lists import top_scoring, all_time_top_scoring, top_commented
-
+from .request import search_random_request
 class Derpibooru(object):
   def __init__(self, q=[], key="", user_id="", perpage=15, comments=False, fav=False, last=(0,"h")):
     self._parameters = {}
@@ -145,9 +145,9 @@ class Derpibooru(object):
     return(url)
 
   def search_random(self):
-    url = search_random(self.hostname, self.q)
+    index = search_random_request(self.hostname, self.q, self.key)
 
-    return(url)
+    return index
 
   def watched(self):
     url = watched(self.hostname, self.key, self.perpage, 1, self.comments, self.fav)
