@@ -7,6 +7,7 @@ License: **Simplified BSD License**
 ## Dependencies
 
 - python2.7 or newer
+- requests
 
 ## How to install
 
