@@ -74,17 +74,13 @@ class Search(object):
 
 if version_info < (3, 0):
   def next(self):
-    image = self._search.next()
-    if image:
-      return image
+    return self._search.next()
 
   Search.next = next
 
 else:
   def __next__(self):
-    image = next(self._search)
-    if image:
-      return image
+    return next(self._search)
 
   Search.__next__ = __next__
 
