@@ -1,6 +1,5 @@
 
-
-creation_date = "creation_date"
+creation_date = "created_at"
 score = "score"
 relevance = "relevance"
 width = "width"

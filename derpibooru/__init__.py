@@ -30,7 +30,10 @@
 #from .uploaded import Uploaded, Uploaded_User
 #from .faves import Faves, Faves_User
 
-from .derpibooru import Derpibooru
+#from .derpibooru import Derpibooru
+from .sort import *
+from .query import *
+from .request import *
 
 __all__ = [
   "__title__",
