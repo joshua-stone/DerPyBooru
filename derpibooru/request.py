@@ -27,34 +27,23 @@ from sys import version_info
 from .image import Image
 
 if version_info < (3, 0):
-  from urllib import quote_plus
+  from urllib import urlencode
 else:
-  from urllib.parse import quote_plus
-
-
-def join_tags(tags):
-  q = quote_plus(",".join(tags))
-
-  return q
-
-def join_parameters(parameters):
-  p = ["{}={}".format(k, v) for k, v in parameters.items()]
-
-  return p
+  from urllib.parse import urlencode
 
 def url(parameters):
-  url, p = "https://derpiboo.ru/search.json?", {}
+  p = {}
 
   for key, value in parameters.items():
     if key == "key":
       if value:
         p["key"] = value
     elif key == "q":
-      p["q"] = join_tags(value) if value else "*"
+      p["q"] = ",".join(value) if value else "*"
     else:
       p[key] = value
   
-  url += "&".join(join_parameters(p))
+  url = "https://derpiboo.ru/search.json?{}".format(urlencode(p))
 
   return url
 
