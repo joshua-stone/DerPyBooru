@@ -60,5 +60,3 @@ def request(parameters):
     parameters["page"] += 1
 
     request = get(url(p))
-
-  yield None
