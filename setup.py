@@ -6,7 +6,7 @@ from setuptools import find_packages
 import derpibooru
 
 setup(
-  name = "PyDerpibooru",
+  name = "DerPyBooru",
   url = "https://github.com/joshua-stone/pyderpibooru",
   version = "0.2",
   author = "Joshua Stone",
