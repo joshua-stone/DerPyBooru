@@ -26,23 +26,12 @@ from .search import Search
 from .sort import random, score, relevance, width, height, comments, random
 
 __all__ = [
-  "__title__",
-  "__summary__",
-  "__uri__",
-  "__version__",
-  "__author__",
-  "__email__",
-  "__license__",
-  "__copyright__"
+  "Search",
+  "random",
+  "score",
+  "relevance",
+  "width",
+  "height",
+  "comments",
+  "random"
 ]
-
-__title__ = "PyDerpibooru"
-__summary__ = "Python wrapper for Derpibooru's API"
-__uri__ = "https://github.com/joshua-stone"
-__version__ = "0.2"
-
-__author__ = "Joshua Stone"
-__email__ = "joshua.gage.stone@gmail.com"
-
-__license__ = "Simplified BSD License"
-__copyright__ = "Copyright 2014 Joshua Stone"

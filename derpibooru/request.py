@@ -26,6 +26,11 @@ from requests import get, codes
 from sys import version_info
 from .image import Image
 
+__all__ = [
+  "url",
+  "request"
+]
+
 if version_info < (3, 0):
   from urllib import urlencode
 else:

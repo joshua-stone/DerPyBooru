@@ -26,6 +26,10 @@ from sys import version_info
 
 from .request import request, url
 
+__all__ = [
+  "Search"
+]
+
 class Search(object):
   def __init__(self, key=None, q={}, sf="created_at", sd="desc"):
     self._parameters = {
