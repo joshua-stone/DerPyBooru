@@ -27,10 +27,10 @@ from sys import version_info
 from .request import request, url
 
 class Search(object):
-  def __init__(self, key=None, q=[], sf="created_at", sd="desc"):
+  def __init__(self, key=None, q={}, sf="created_at", sd="desc"):
     self._parameters = {
       "key": key,
-      "q": [str(tag).strip() for tag in q if tag],
+      "q": {str(tag).strip() for tag in q if tag},
       "sf": sf,
       "sd": sd
     }
@@ -52,7 +52,7 @@ class Search(object):
     return Search(**self._parameters)
 
   def query(self, *q):
-    self._parameters["q"] = [str(tag).strip() for tag in q if tag]
+    self._parameters["q"] = {str(tag).strip() for tag in q if tag}
     return Search(**self._parameters)
 
   def descending(self):

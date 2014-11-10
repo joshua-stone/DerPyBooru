@@ -22,11 +22,18 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .image import Image
 from requests import get, codes
+from sys import version_info
+from .image import Image
+
+if version_info < (3, 0):
+  from urllib import quote_plus
+else:
+  from urllib.parse import quote_plus
+
 
 def join_tags(tags):
-  q = ",".join(tags)
+  q = quote_plus(",".join(tags))
 
   return q
 
