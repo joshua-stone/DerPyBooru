@@ -59,7 +59,10 @@ def request(parameters):
   request = get(url(p))
 
   while request.status_code == codes.ok:
-    for image in request.json()["search"]:
+    images = request.json()["search"]
+    if not images:
+       break
+    for image in images:
       yield Image(image)
 
     parameters["page"] += 1
