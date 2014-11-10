@@ -22,18 +22,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#from .search import search
-#from .lists import Top_Scoring, All_Time_Top_Scoring, Top_Commented
-#from .image import Image
-#from .index import Index
-#from .watched import Watched, Watched_User
-#from .uploaded import Uploaded, Uploaded_User
-#from .faves import Faves, Faves_User
-
-#from .derpibooru import Derpibooru
-from .sort import *
-from .query import *
-from .request import *
+from .search import Search
+from .sort import random, score, relevance, width, height, comments, random
 
 __all__ = [
   "__title__",
@@ -49,7 +39,7 @@ __all__ = [
 __title__ = "PyDerpibooru"
 __summary__ = "Python wrapper for Derpibooru's API"
 __uri__ = "https://github.com/joshua-stone"
-__version__ = "0.1"
+__version__ = "0.2"
 
 __author__ = "Joshua Stone"
 __email__ = "joshua.gage.stone@gmail.com"

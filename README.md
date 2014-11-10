@@ -1,4 +1,4 @@
-# PyDerpibooru
+# DerPyBooru
 
 Python bindings for Derpibooru's API
 

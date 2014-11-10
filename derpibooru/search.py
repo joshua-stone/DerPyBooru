@@ -22,45 +22,65 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-def search(hostname, q, page, perpage, comments, fav):
-  url, parameters = hostname, []
+from sys import version_info
 
-  if q == []:
-    search = "/images/page/{0}.json".format(page)
-  else:
-    search, tags = "/search.json", ",".join(q)
-    parameters.append("q={0}".format(tags.replace(" ", "+")))
-    parameters.append("page={0}".format(page))
+from .request import request, url
 
-  if comments == True:
-    parameters.append("comments=")
+class Search(object):
+  def __init__(self, key=None, q=[], sf="created_at", sd="desc"):
+    self._parameters = {
+      "key": key,
+      "q": [str(tag).strip() for tag in q if tag],
+      "sf": sf,
+      "sd": sd
+    }
+    self._search = request(self.parameters)
+  
+  def __iter__(self):
+    return self
 
-  if fav == True:
-    parameters.append("fav=")
+  @property
+  def parameters(self):
+    return self._parameters
 
-  parameters.append("perpage={0}".format(perpage))
+  @property
+  def url(self):
+    return url(self._parameters)
 
-  url += search
+  def key(self, key=None):
+    self._parameters["key"] = key
+    return Search(**self._parameters)
 
-  if parameters != []:
-    url += "?{0}".format("&".join(parameters))
+  def query(self, *q):
+    self._parameters["q"] = [str(tag).strip() for tag in q if tag]
+    return Search(**self._parameters)
 
-  return url
+  def descending(self):
+    self._parameters["sd"] = "desc" 
+    return Search(**self._parameters)
 
-def search_random(hostname, q, key):
-  url = hostname
+  def ascending(self):
+    self._parameters["sd"] = "asc"
+    return Search(**self._parameters)
 
-  if q == []:
-    url += "/images/random.json"
-  else:
-    url += "/search.json?random_image=y"
+  def sort_by(self, sf):
+    self._parameters["sf"] = sf
+    return Search(**self._parameters)
 
-    tags = ",".join(q)
 
-    url += "&q={0}".format(tags.replace(" ", "+"))
+if version_info < (3, 0):
+  def next(self):
+    image = self._search.next()
+    if image:
+      return image
 
-  if key != "":
-    url += "&key={0}".format(key)
+  Search.next = next
 
-  return url
+else:
+  def __next__(self):
+    image = next(self._search)
+    if image:
+      return image
+
+  Search.__next__ = __next__
 

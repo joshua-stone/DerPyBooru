@@ -1,4 +1,28 @@
+# Copyright (c) 2014, Joshua Stone
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+from .image import Image
 from requests import get, codes
 
 def join_tags(tags):
@@ -11,26 +35,34 @@ def join_parameters(parameters):
 
   return p
 
-def url(key=(), q=[], sf="created_at", sd="desc"):
-  url, parameters = "https://derpiboo.ru/search.json?", {}
+def url(parameters):
+  url, p = "https://derpiboo.ru/search.json?", {}
 
-  if key:
-    parameters[key[0]] = key[1]
-
-  parameters["q"] = join_tags(q) if q else "*"
-
-  parameters["sf"] = sf
-  parameters["sd"] = sd
-
-  url += "&".join(join_parameters(parameters))
+  for key, value in parameters.items():
+    if key == "key":
+      if value:
+        p["key"] = value
+    elif key == "q":
+      p["q"] = join_tags(value) if value else "*"
+    else:
+      p[key] = value
+  
+  url += "&".join(join_parameters(p))
 
   return url
 
-#def search(parameters):
-#  url = search_random(hostname, q, key)
-#
-#  request = get(url)
-#
-#  if request.status_code == codes.ok:
-#    index = request.json()["id"]
-#    return index
+def request(parameters):
+  p = parameters
+  p.update({ "page": 1, "perpage": 50})
+
+  request = get(url(p))
+
+  while request.status_code == codes.ok:
+    for image in request.json()["search"]:
+      yield Image(image)
+
+    parameters["page"] += 1
+
+    request = get(url(p))
+
+  yield None
