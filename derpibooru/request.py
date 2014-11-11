@@ -27,6 +27,8 @@ from sys import version_info
 from .image import Image
 
 __all__ = [
+  "tags",
+  "api_key",
   "url",
   "request",
   "get_image_data"
@@ -36,6 +38,14 @@ if version_info < (3, 0):
   from urllib import urlencode
 else:
   from urllib.parse import urlencode
+
+def tags(q):
+  tags = {str(tag).strip() for tag in q if tag}
+
+  return tags if tags else {}
+
+def api_key(api_key):
+  return str(api_key) if api_key else ""
 
 def format_params(params):
   p = {}
@@ -76,7 +86,7 @@ def request(params):
 
 def get_images(params, limit=50):
 
-  if limit != None:
+  if limit is not None:
     l = int(limit)
     if l > 0:
       r, counter = request(params), 0

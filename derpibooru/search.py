@@ -24,7 +24,7 @@
 
 from sys import version_info
 
-from .request import get_images, url
+from .request import get_images, url, tags, api_key
 
 __all__ = [
   "Search"
@@ -32,33 +32,33 @@ __all__ = [
 
 class Search(object):
   def __init__(self, key="", q={}, sf="created_at", sd="desc", limit=50):
-    self._parameters = {
-      "key": key if key else "",
-      "q": {str(tag).strip() for tag in q if tag} if q else {},
+    self._params = {
+      "key": api_key(key),
+      "q": tags(q),
       "sf": sf,
       "sd": sd
     }
     self._limit = limit
-    self._search = get_images(self.parameters, self._limit)
+    self._search = get_images(self._params, self._limit)
   
   def __iter__(self):
     return self
 
   @property
   def key(self):
-    return self._parameters["key"]    
+    return self._params["key"]    
 
   @property
   def q(self):
-    return self._parameters["q"]
+    return self._params["q"]
 
   @property
   def sf(self):
-    return self._parameters["sf"]
+    return self._params["sf"]
 
   @property
   def sd(self):
-    return self._parameters["sd"]
+    return self._params["sd"]
 
   @property
   def limit(self):
@@ -66,35 +66,37 @@ class Search(object):
 
   @property
   def parameters(self):
-    return self._parameters
+    parameters = self._params
+    parameters["limit"] = self._limit
+    return parameters
 
   @property
   def url(self):
-    return url(self.parameters)
+    return url(self._params)
 
   def api_key(self, key=None):
-    self._parameters["key"] = key
-    return Search(self.key, self.q, self.sf, self.sd, self.limit)
+    self._params["key"] = api_key(key)
+    return Search(**self.parameters)
 
   def query(self, *q):
-    self._parameters["q"] = {str(tag).strip() for tag in q if tag}
-    return Search(self.key, self.q, self.sf, self.sd, self.limit)
+    self._params["q"] = tags(q)
+    return Search(**self.parameters)
 
   def descending(self):
-    self._parameters["sd"] = "desc" 
-    return Search(self.key, self.q, self.sf, self.sd, self.limit)
+    self._params["sd"] = "desc" 
+    return Search(**self.parameters)
 
   def ascending(self):
-    self._parameters["sd"] = "asc"
-    return Search(self.key, self.q, self.sf, self.sd, self.limit)
+    self._params["sd"] = "asc"
+    return Search(**self.parameters)
 
   def sort_by(self, sf):
-    self._parameters["sf"] = sf
-    return Search(self.key, self.q, self.sf, self.sd, self.limit)
+    self._params["sf"] = sf
+    return Search(**self.parameters)
 
   def image_limit(self, limit):
     self._limit = limit
-    return Search(self.key, self.q, self.sf, self.sd, self.limit)
+    return Search(**self.parameters)
 
 if version_info < (3, 0):
   def next(self):
