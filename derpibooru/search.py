@@ -24,24 +24,45 @@
 
 from sys import version_info
 
-from .request import request, url
+from .request import get_images, url
 
 __all__ = [
   "Search"
 ]
 
 class Search(object):
-  def __init__(self, key=None, q={}, sf="created_at", sd="desc"):
+  def __init__(self, key="", q={}, sf="created_at", sd="desc", limit=50):
     self._parameters = {
-      "key": key,
-      "q": {str(tag).strip() for tag in q if tag},
+      "key": key if key else "",
+      "q": {str(tag).strip() for tag in q if tag} if q else {},
       "sf": sf,
       "sd": sd
     }
-    self._search = request(self.parameters)
+    self._limit = limit
+    self._search = get_images(self.parameters, self._limit)
   
   def __iter__(self):
     return self
+
+  @property
+  def key(self):
+    return self._parameters["key"]    
+
+  @property
+  def q(self):
+    return self._parameters["q"]
+
+  @property
+  def sf(self):
+    return self._parameters["sf"]
+
+  @property
+  def sd(self):
+    return self._parameters["sd"]
+
+  @property
+  def limit(self):
+    return self._limit
 
   @property
   def parameters(self):
@@ -49,28 +70,31 @@ class Search(object):
 
   @property
   def url(self):
-    return url(self._parameters)
+    return url(self.parameters)
 
-  def key(self, key=None):
+  def api_key(self, key=None):
     self._parameters["key"] = key
-    return Search(**self._parameters)
+    return Search(self.key, self.q, self.sf, self.sd, self.limit)
 
   def query(self, *q):
     self._parameters["q"] = {str(tag).strip() for tag in q if tag}
-    return Search(**self._parameters)
+    return Search(self.key, self.q, self.sf, self.sd, self.limit)
 
   def descending(self):
     self._parameters["sd"] = "desc" 
-    return Search(**self._parameters)
+    return Search(self.key, self.q, self.sf, self.sd, self.limit)
 
   def ascending(self):
     self._parameters["sd"] = "asc"
-    return Search(**self._parameters)
+    return Search(self.key, self.q, self.sf, self.sd, self.limit)
 
   def sort_by(self, sf):
     self._parameters["sf"] = sf
-    return Search(**self._parameters)
+    return Search(self.key, self.q, self.sf, self.sd, self.limit)
 
+  def image_limit(self, limit):
+    self._limit = limit
+    return Search(self.key, self.q, self.sf, self.sd, self.limit)
 
 if version_info < (3, 0):
   def next(self):

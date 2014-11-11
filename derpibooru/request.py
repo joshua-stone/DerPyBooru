@@ -64,16 +64,30 @@ def request(params):
   request = get(hostname, params=p)
 
   while request.status_code == codes.ok:
-    images, counter = request.json()["search"], 0
+    images, image_count = request.json()["search"], 0
     for image in images:
       yield Image(image)
-      counter += 1
-    if counter < 50:
+      image_count += 1
+    if image_count < 50:
       break
 
     p["page"] += 1
     request = get(hostname, params=p)
 
+def get_images(params, limit=50):
+
+  if limit != None:
+    l = int(limit)
+    if l > 0:
+      r, counter = request(params), 0
+      for index, image in enumerate(r, start=1):
+        yield image
+        if index >= l:
+          break
+  else:
+    r = request(params)
+    for image in r:
+      yield image
 
 def get_image_data(id_number):
   url = "https://derpiboo.ru/{}.json?fav=&comments=".format(id_number)
