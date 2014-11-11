@@ -28,7 +28,8 @@ from .image import Image
 
 __all__ = [
   "url",
-  "request"
+  "request",
+  "get_image_data"
 ]
 
 if version_info < (3, 0):
@@ -36,10 +37,10 @@ if version_info < (3, 0):
 else:
   from urllib.parse import urlencode
 
-def url(parameters):
+def format_params(params):
   p = {}
 
-  for key, value in parameters.items():
+  for key, value in params.items():
     if key == "key":
       if value:
         p["key"] = value
@@ -47,24 +48,40 @@ def url(parameters):
       p["q"] = ",".join(value) if value else "*"
     else:
       p[key] = value
-  
-  url = "https://derpiboo.ru/search.json?{}".format(urlencode(p))
+
+  return p
+
+def url(params):
+  p = format_params(params)
+  url = "https://derpiboo.ru/search?{}".format(urlencode(p))
 
   return url
 
-def request(parameters):
-  p = parameters
+def request(params):
+  hostname, p = "https://derpiboo.ru/search.json", format_params(params)
   p.update({ "page": 1, "perpage": 50})
 
-  request = get(url(p))
+  request = get(hostname, params=p)
 
   while request.status_code == codes.ok:
-    images = request.json()["search"]
-    if not images:
-       break
+    images, counter = request.json()["search"], 0
     for image in images:
       yield Image(image)
+      counter += 1
+    if counter < 50:
+      break
 
-    parameters["page"] += 1
+    p["page"] += 1
+    request = get(hostname, params=p)
 
-    request = get(url(p))
+
+def get_image_data(id_number):
+  url = "https://derpiboo.ru/{}.json?fav=&comments=".format(id_number)
+
+  request = get(url)
+
+  if request.status_code == codes.ok:
+    data = request.json()
+
+    return data
+
