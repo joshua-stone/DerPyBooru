@@ -24,6 +24,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+from re import sub
 from requests import get, codes
 from .comment import Comment
 
@@ -158,6 +159,12 @@ class Image(object):
   @property
   def image(self):
     return "https:" + self.data["image"]
+
+  @property
+  def image_shortened(self):
+    url = sub("_.*\.", ".", self.image)
+
+    return url
 
   @property
   def score(self):
