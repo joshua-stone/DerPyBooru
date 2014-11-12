@@ -32,7 +32,19 @@ __all__ = [
 ]
 
 class Search(object):
+  """
+  Search() is the primary interface for interacting with Derpibooru's REST API.
+
+  All properties are read-only, and every method returns a new instance of
+  Search() to avoid mutating state in ongoing search queries. This makes object
+  interactions predictable as well as making versioning of searches relatively
+  easy.
+  """
   def __init__(self, key="", q={}, sf="created_at", sd="desc", limit=50):
+    """
+    By default initializes an instance of Search with the parameters to get
+    the first 50 images on Derpibooru's front page
+    """
     self._params = {
       "key": api_key(key),
       "q": tags(q),
@@ -44,30 +56,56 @@ class Search(object):
     self._search = get_images(**self.parameters)
   
   def __iter__(self):
+    """
+    Make Search() iterable so that new search results can be lazily generated
+    for performance reasons
+    """
     return self
 
   @property
   def parameters(self):
+    """
+    Returns a list of available parameters; useful for passing stating to new
+    instances of Search()
+    """
     return self._params
 
   @property
   def key(self):
+    """
+    Returns a string of the current API key in use; by default is empty
+    """
     return self.parameters["key"]    
 
   @property
   def q(self):
+    """
+    Returns a set of strings representing a search query; by default is empty
+    """
     return self.parameters["q"]
 
   @property
   def sf(self):
+    """
+    Returns the current sort format; by default uses `created_at' for newest to
+    oldest posts
+    """
     return self.parameters["sf"]
 
   @property
   def sd(self):
+    """
+    Returns current sorting direction; by default uses `descending' for biggest
+    to smallest based on the current sorting format
+    """
     return self.parameters["sd"]
 
   @property
   def limit(self):
+    """
+    Returns the current limit set for image results; default is 50 so as to be
+    less of a burden on Derpibooru
+    """
     return self.parameters["limit"]
 
   @property
@@ -82,31 +120,54 @@ class Search(object):
     return url(params)
 
   def api_key(self, key=None):
+    """
+    Takes a user's API key string which applies content settings. API keys can
+    be found at <https://derpiboo.ru/users/edit>
+    """
     return self.__class__(key, self.q, self.sf, self.sd, self.limit)
 
   def query(self, *q):
+    """
+    Takes one or more strings for searching by tag and/or metadata
+    """
     return self.__class__(self.key, q, self.sf, self.sd, self.limit)
 
   def sort_by(self, sf):
+    """
+    Determines how to sort search results; default is sort.creation_date
+    """
     return self.__class__(self.key, self.q, sf, self.sd, self.limit)
 
   def descending(self):
     return self.__class__(self.key, self.q, self.sf, "desc", self.limit)
 
   def ascending(self):
+    """
+    Order results from smallest to largest; default is descending order
+    """
     return self.__class__(self.key, self.q, self.sf, "asc", self.limit)
 
   def image_limit(self, limit):
+    """
+    Set absolute limit on number of images to return, or set to None to return
+    as many results as needed; default 50 images
+    """
     return self.__class__(self.key, self.q, self.sf, self.sd, limit)
 
 if version_info < (3, 0):
   def next(self):
+    """
+    Returns a result wrapped in a new instance of Image()
+    """
     return self._search.next()
 
   Search.next = next
 
 else:
   def __next__(self):
+    """
+    Returns a result wrapped in a new instance of Image()
+    """
     return next(self._search)
 
   Search.__next__ = __next__
