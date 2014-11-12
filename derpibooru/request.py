@@ -25,10 +25,9 @@
 from requests import get, codes
 from sys import version_info
 from .image import Image
+from .helpers import format_params
 
 __all__ = [
-  "tags",
-  "api_key",
   "url",
   "request",
   "get_image_data"
@@ -38,28 +37,6 @@ if version_info < (3, 0):
   from urllib import urlencode
 else:
   from urllib.parse import urlencode
-
-def tags(q):
-  tags = {str(tag).strip() for tag in q if tag}
-
-  return tags if tags else {}
-
-def api_key(api_key):
-  return str(api_key) if api_key else ""
-
-def format_params(params):
-  p = {}
-
-  for key, value in params.items():
-    if key == "key":
-      if value:
-        p["key"] = value
-    elif key == "q":
-      p["q"] = ",".join(value) if value else "*"
-    else:
-      p[key] = value
-
-  return p
 
 def url(params):
   p = format_params(params)

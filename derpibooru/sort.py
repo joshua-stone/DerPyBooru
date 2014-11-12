@@ -22,6 +22,17 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+__all__ = [
+  "creation_date",
+  "score",
+  "relevance",
+  "width",
+  "height",
+  "comments",
+  "random",
+  "sorting_methods"
+]
+
 creation_date = "created_at"
 score = "score"
 relevance = "relevance"
@@ -29,4 +40,12 @@ width = "width"
 height = "height"
 comments = "comments"
 random = "random"
-  
+
+sorting_methods = {
+  "created_at",
+  "score",
+  "relevance",
+  "height",
+  "comments",
+  "random"
+}

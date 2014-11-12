@@ -24,7 +24,8 @@
 
 from sys import version_info
 
-from .request import get_images, url, tags, api_key
+from .request import get_images, url
+from .helpers import tags, api_key, sort_format
 
 __all__ = [
   "Search"
@@ -35,7 +36,7 @@ class Search(object):
     self._params = {
       "key": api_key(key),
       "q": tags(q),
-      "sf": sf,
+      "sf": sort_format(sf),
       "sd": sd,
       "limit": limit
     }

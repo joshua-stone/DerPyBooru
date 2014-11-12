@@ -23,15 +23,17 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from .search import Search
-from .sort import random, score, relevance, width, height, comments, random
+
+from . import sort
+# import random, score, relevance, width, height, comments, random
 
 __all__ = [
   "Search",
   "random",
-  "score",
-  "relevance",
-  "width",
-  "height",
-  "comments",
-  "random"
+  "sort.score",
+  "sort.relevance",
+  "sort.width",
+  "sort.height",
+  "sort.comments",
+  "sort.random"
 ]
