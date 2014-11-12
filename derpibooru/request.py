@@ -68,10 +68,9 @@ def url(params):
   return url
 
 def request(params):
-  hostname, p = "https://derpiboo.ru/search.json", format_params(params)
-  p.update({ "page": 1, "perpage": 50})
+  search = "https://derpiboo.ru/search.json"
 
-  request = get(hostname, params=p)
+  request = get(search, params=params)
 
   while request.status_code == codes.ok:
     images, image_count = request.json()["search"], 0
@@ -82,10 +81,18 @@ def request(params):
       break
 
     p["page"] += 1
-    request = get(hostname, params=p)
+    request = get(search, params=params)
 
-def get_images(params, limit=50):
-
+def get_images(key="", q={}, sf="created_at", sd="desc", limit=50):
+  params = format_params({
+    "key": key,
+    "q":  q,
+    "sf": sf,
+    "sd": sd,
+    "page": 1,
+    "perpage": 50
+  })
+  
   if limit is not None:
     l = int(limit)
     if l > 0:

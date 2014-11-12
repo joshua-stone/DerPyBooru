@@ -36,67 +36,67 @@ class Search(object):
       "key": api_key(key),
       "q": tags(q),
       "sf": sf,
-      "sd": sd
+      "sd": sd,
+      "limit": limit
     }
-    self._limit = limit
-    self._search = get_images(self._params, self._limit)
+
+    self._search = get_images(**self.parameters)
   
   def __iter__(self):
     return self
 
   @property
+  def parameters(self):
+    return self._params
+
+  @property
   def key(self):
-    return self._params["key"]    
+    return self.parameters["key"]    
 
   @property
   def q(self):
-    return self._params["q"]
+    return self.parameters["q"]
 
   @property
   def sf(self):
-    return self._params["sf"]
+    return self.parameters["sf"]
 
   @property
   def sd(self):
-    return self._params["sd"]
+    return self.parameters["sd"]
 
   @property
   def limit(self):
-    return self._limit
-
-  @property
-  def parameters(self):
-    parameters = self._params
-    parameters["limit"] = self._limit
-    return parameters
+    return self.parameters["limit"]
 
   @property
   def url(self):
-    return url(self._params)
+    params = {
+      "key": self.key,
+      "q": self.q,
+      "sf": self.sf,
+      "sd": self.sd,
+    }
+
+    return url(params)
 
   def api_key(self, key=None):
-    self._params["key"] = api_key(key)
-    return Search(**self.parameters)
+    return self.__class__(key, self.q, self.sf, self.sd, self.limit)
 
   def query(self, *q):
-    self._params["q"] = tags(q)
-    return Search(**self.parameters)
-
-  def descending(self):
-    self._params["sd"] = "desc" 
-    return Search(**self.parameters)
-
-  def ascending(self):
-    self._params["sd"] = "asc"
-    return Search(**self.parameters)
+    return self.__class__(self.key, q, self.sf, self.sd, self.limit)
 
   def sort_by(self, sf):
-    self._params["sf"] = sf
-    return Search(**self.parameters)
+    return self.__class__(self.key, self.q, sf, self.sd, self.limit)
+
+  def descending(self):
+    return self.__class__(self.key, self.q, self.sf, "desc", self.limit)
+
+  def ascending(self):
+    return self.__class__(self.key, self.q, self.sf, "asc", self.limit)
 
   def image_limit(self, limit):
-    self._limit = limit
-    return Search(**self.parameters)
+    return self.__class__(self.key, self.q, self.sf, self.sd, limit)
 
 if version_info < (3, 0):
   def next(self):
