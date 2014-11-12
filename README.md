@@ -15,13 +15,14 @@ License: **Simplified BSD License**
 
 ##Typical usage
 
-###Crawling Derpibooru's front page
+###Getting images currently on Derpibooru's front page
 
 ```python
 from derpibooru import Search
 
 for image in Search():
-  print(image.url)
+  id, score, tags = image.id_number, image.score, ", ".join(image.tags)
+  print("#{} - score: {:>2} - {}".format(id, score, tags))
 ```
 
 ###Searching by tag
@@ -29,7 +30,7 @@ for image in Search():
 ```python
 from derpibooru import Search
 
-for image in Search().query("rarity", "safe"):
+for image in Search().query("rarity", "twilight sparkle"):
   print(image.url)
 ```
 
@@ -38,8 +39,12 @@ for image in Search().query("rarity", "safe"):
 ```python
 from derpibooru import Search
 
-for image in Search().ascending():
-  print(image.url)
+# This is only an example and shouldn't be used in practice as it abuses
+# Derpibooru's licensing terms
+for image in Search().ascending().image_limit(None):
+  id, score, tags = image.id_number, image.score, ", ".join(image.tags)
+  print("#{} - score: {:<3} - {}".format(id, score, tags))
+
 ```
 
 ###Getting random images
@@ -50,3 +55,22 @@ from derpibooru import Search
 for image in Search().sort_by("random")
   print(image.url)
 ```
+
+###Getting top 100 posts
+```python
+from derpibooru import Search
+
+top_scoring = [image for image in Search().sort_by("score").image_limit(100)]
+```
+
+###Storing and passing new search parameters
+
+```python
+from derpibooru import Search
+
+params = Search().sort_by("score").image_limit(100).parameters
+
+top_scoring = Search(**params)
+top_animated = top_scoring.query("animated")
+```
+
