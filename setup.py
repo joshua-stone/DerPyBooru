@@ -8,7 +8,7 @@ import derpibooru
 setup(
   name = "DerPyBooru",
   url = "https://github.com/joshua-stone/DerPyBooru",
-  version = "0.2",
+  version = "0.3",
   author = "Joshua Stone",
   license = "Simplified BSD License",
   platforms = ["any"],

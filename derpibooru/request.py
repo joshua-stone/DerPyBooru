@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2014, Joshua Stone
 # All rights reserved.
 #
@@ -30,6 +32,7 @@ from .helpers import format_params
 __all__ = [
   "url",
   "request",
+  "get_images",
   "get_image_data"
 ]
 

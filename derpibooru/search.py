@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2014, Joshua Stone
 # All rights reserved.
 #
@@ -110,6 +112,12 @@ class Search(object):
 
   @property
   def url(self):
+    """
+    Returns a search URL built on set parameters. Example based on default
+    parameters:
+
+    https://derpiboo.ru/search?sd=desc&sf=created_at&q=%2A
+    """
     params = {
       "key": self.key,
       "q": self.q,

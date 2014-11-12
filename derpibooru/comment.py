@@ -25,29 +25,26 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 __all__ = [
-  "creation_date",
-  "score",
-  "relevance",
-  "width",
-  "height",
-  "comments",
-  "random",
-  "sorting_methods"
+  "Comment"
 ]
 
-creation_date = "created_at"
-score = "score"
-relevance = "relevance"
-width = "width"
-height = "height"
-comments = "comments"
-random = "random"
+class Comment(object):
+  def __init__(self, data):
+    self._data = data
 
-sorting_methods = {
-  "created_at",
-  "score",
-  "relevance",
-  "height",
-  "comments",
-  "random"
-}
+  @property
+  def data(self):
+    return self._data
+
+  @property
+  def image_id(self):
+    return self.data["image_id"]
+
+  @property
+  def author(self):
+    return self.data["author"]
+
+  @property
+  def body(self):
+    return self.data["body"]
+

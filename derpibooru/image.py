@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2014, Joshua Stone
 # All rights reserved.
 #
@@ -22,7 +24,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#from .request import get_image_data
+from requests import get, codes
+from .comment import Comment
 
 __all__ = [
   "Image"
@@ -181,11 +184,20 @@ class Image(object):
     return self.data["is_rendered"]
 
   @property
-  def comments(self):
-    if not "comments" in self.data:
-      self._data = index(self.id_number)
+  def faved_by(self):
+    faved_by = "favourited_by_users"
+    if not faved_by in self.data:
+      self.update()
 
-    return self.data["comments"]
+    return self.data[faved_by]
+
+  @property
+  def comments(self):
+    comments = "comments"
+    if not comments in self.data:
+      self.update()
+
+    return [Comment(c) for c in self.data[comments]]
 
   @property
   def url(self):
@@ -194,4 +206,14 @@ class Image(object):
   @property
   def data(self):
     return self._data
+
+  def update(self):
+    url = "https://derpiboo.ru/{}.json?fav=&comments=".format(self.id_number)
+
+    request = get(url)
+
+    if request.status_code == codes.ok:
+      data = request.json()
+
+      self._data = data
 

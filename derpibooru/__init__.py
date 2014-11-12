@@ -19,7 +19,7 @@ Library documentation is found at <https://github.com/joshua-stone/DerPyBooru>.
 """
 
 __title__ = "DerPyBooru"
-__version__ = '0.2'
+__version__ = "0.3"
 __author__ = "Joshua Stone"
 __license__ = "Simplified BSD Licence"
 __copyright__ = "Copyright (c) 2014, Joshua Stone"
@@ -30,11 +30,12 @@ from . import sort
 
 __all__ = [
   "Search",
-  "random",
-  "score",
-  "relevance",
-  "width",
-  "height",
-  "comments",
-  "random"
+  "sort.random",
+  "sort.score",
+  "sort.relevance",
+  "sort.width",
+  "sort.height",
+  "sort.comments",
+  "sort.random",
+  "sort.sorting_methods"
 ]
