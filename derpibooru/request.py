@@ -26,7 +26,6 @@
 
 from requests import get, codes
 from sys import version_info
-from .image import Image
 from .helpers import format_params
 
 __all__ = [
@@ -55,7 +54,7 @@ def request(params):
   while request.status_code == codes.ok:
     images, image_count = request.json()["search"], 0
     for image in images:
-      yield Image(image)
+      yield image
       image_count += 1
     if image_count < 50:
       break
@@ -94,5 +93,8 @@ def get_image_data(id_number):
   if request.status_code == codes.ok:
     data = request.json()
 
-    return data
+    if "duplicate_of" in data:
+      return get_image_data(data["duplicate_of"])
+    else:
+      return data
 

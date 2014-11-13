@@ -25,7 +25,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from re import sub
-from requests import get, codes
+from .request import get_image_data
 from .comment import Comment
 
 __all__ = [
@@ -42,7 +42,7 @@ class Image(object):
     self._data = data
   
   def __str__(self):
-    return "Image({0})".format(self.data["id_number"])
+    return "Image({0})".format(self.id_number)
 
   @property
   def id(self):
@@ -193,19 +193,27 @@ class Image(object):
   @property
   def faved_by(self):
     faved_by = "favourited_by_users"
-    if not faved_by in self.data:
-      self.update()
 
-    return self.data[faved_by]
+    if self.faves > 0:
+      if not faved_by in self.data:
+        self.update()
+
+    else:
+      self._data[faved_by] = []
+
+    return self._data[faved_by]
 
   @property
   def comments(self):
-    comments = "comments"
-    if not comments in self.data:
-      self.update()
+    if self.comment_count > 0:
+      if not "comments" in self.data:
+        self.update()
 
-    return [Comment(c) for c in self.data[comments]]
+    else:
+      self._data["comments"] = []
 
+    return [Comment(c) for c in self.data["comments"]]
+       
   @property
   def url(self):
     return "https://derpiboo.ru/{}".format(self.id_number)
@@ -215,12 +223,8 @@ class Image(object):
     return self._data
 
   def update(self):
-    url = "https://derpiboo.ru/{}.json?fav=&comments=".format(self.id_number)
+    data = get_image_data(self.id_number)
 
-    request = get(url)
-
-    if request.status_code == codes.ok:
-      data = request.json()
-
+    if data:
       self._data = data
 

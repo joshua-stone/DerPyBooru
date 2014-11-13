@@ -27,6 +27,7 @@
 from sys import version_info
 
 from .request import get_images, url
+from .image import Image
 from .helpers import tags, api_key, sort_format
 
 __all__ = [
@@ -167,7 +168,7 @@ if version_info < (3, 0):
     """
     Returns a result wrapped in a new instance of Image()
     """
-    return self._search.next()
+    return Image(self._search.next())
 
   Search.next = next
 
@@ -176,7 +177,7 @@ else:
     """
     Returns a result wrapped in a new instance of Image()
     """
-    return next(self._search)
+    return Image(next(self._search))
 
   Search.__next__ = __next__
 

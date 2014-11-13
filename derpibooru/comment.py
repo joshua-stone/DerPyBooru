@@ -32,6 +32,8 @@ class Comment(object):
   def __init__(self, data):
     self._data = data
 
+  def __str__(self):
+    return "Comment({0})".format(self.author)
   @property
   def data(self):
     return self._data
