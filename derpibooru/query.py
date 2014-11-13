@@ -27,14 +27,23 @@
 __all__ = [
   "query"
 ]
- 
-class Equal(object):
-  def __init__(self, name):
-    self.name = name
 
+class Query_Field(object):
+  def __init__(self, name, is_neg=False):
+    self.name = name
+    self.is_neg = is_neg
+
+  def __neg__(self):
+    return self.__class__(self.name, is_neg=True)
+
+class Equal(Query_Field):
   def __eq__(self, value):
     if value:
-      return "{}:{}".format(self.name, value)
+      return "{}{}:{}".format(
+        "-" if self.is_neg else "",
+        self.name,
+        value
+      )
     else:
       raise ValueError(value)
 
@@ -49,35 +58,37 @@ class Equal(object):
 
   def __le__(self, value):
     raise AttributeError("le")
- 
- 
-class Comparable(object):
-  def __init__(self, name):
-    self.name = name
 
+ 
+class Comparable(Query_Field):
   def op(self, op, value):
     try:
       float(value)
-      return "{}.{}:{}".format(self.name, op, value)
+      return "{}{}.{}:{}".format(
+        "-" if self.is_neg else "",
+        self.name,
+        op,
+        value
+      )
     except:
       raise ValueError(value)
-
+ 
   def __eq__(self, value):
     return self.op("eq", value)
-
+ 
   def __gt__(self, value):
     return self.op("gt", value)
-
+ 
   def __lt__(self, value):
     return self.op("lt", value)
-
+ 
   def __ge__(self, value):
     return self.op("gte", value)
-
+ 
   def __le__(self, value):
-    return self.op("lte", value)
+    return self.op("lte", value) 
 
-    
+
 class Query(object):
   def __init__(self):
     for field in ["description", "faved_by", "source_url", "orig_sha512_hash",
