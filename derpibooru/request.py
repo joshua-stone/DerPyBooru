@@ -59,7 +59,7 @@ def request(params):
     if image_count < 50:
       break
 
-    p["page"] += 1
+    params["page"] += 1
     request = get(search, params=params)
 
 def get_images(key="", q={}, sf="created_at", sd="desc", limit=50):

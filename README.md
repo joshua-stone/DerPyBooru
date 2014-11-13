@@ -43,34 +43,47 @@ from derpibooru import Search
 # Derpibooru's licensing terms
 for image in Search().ascending().image_limit(None):
   id, score, tags = image.id_number, image.score, ", ".join(image.tags)
-  print("#{} - score: {:<3} - {}".format(id, score, tags))
-
+  print("#{} - score: {:>3} - {}".format(id, score, tags))
 ```
 
 ###Getting random images
 
 ```python
-from derpibooru import Search
+from derpibooru import Search, sort
 
-for image in Search().sort_by("random")
+for image in Search().sort_by(sort.random):
   print(image.url)
 ```
 
 ###Getting top 100 posts
 ```python
-from derpibooru import Search
+from derpibooru import Search, sort
 
-top_scoring = [image for image in Search().sort_by("score").image_limit(100)]
+top_scoring = [image for image in Search().sort_by(sort.score).image_limit(100)]
 ```
 
 ###Storing and passing new search parameters
 
 ```python
-from derpibooru import Search
+from derpibooru import Search, sort
 
-params = Search().sort_by("score").image_limit(100).parameters
+params = Search().sort_by(sort.score).image_limit(100).parameters
 
 top_scoring = Search(**params)
 top_animated = top_scoring.query("animated")
 ```
 
+###Filtering by metadata
+
+```python
+from derpibooru import Search, sort, query
+
+q = {
+  "wallpaper",
+  query.width == 1920,
+  query.height == 1080,
+  query.score >= 100
+}
+
+wallpapers = [image for image in Search().query(*q)]
+```

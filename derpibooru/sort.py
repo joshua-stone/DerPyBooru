@@ -25,29 +25,25 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 __all__ = [
-  "creation_date",
-  "score",
-  "relevance",
-  "width",
-  "height",
-  "comments",
-  "random",
-  "sorting_methods"
+  "sort"
 ]
 
-creation_date = "created_at"
-score = "score"
-relevance = "relevance"
-width = "width"
-height = "height"
-comments = "comments"
-random = "random"
+class Sort(object):
+  def __init__(self):
+    for method in self.available_methods:
+      setattr(self, method, method)
 
-sorting_methods = {
-  "created_at",
-  "score",
-  "relevance",
-  "height",
-  "comments",
-  "random"
-}
+  @property
+  def available_methods(self):
+    sorting_methods = {
+      "created_at",
+      "score",
+      "relevance",
+      "height",
+      "comments",
+      "random"
+    }
+
+    return sorting_methods
+
+sort = Sort()

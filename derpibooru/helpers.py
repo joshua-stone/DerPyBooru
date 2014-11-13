@@ -31,7 +31,7 @@ __all__ = [
   "format_params"
 ]
 
-from .sort import sorting_methods
+from .sort import sort
 
 def tags(q):
   tags = {str(tag).strip() for tag in q if tag}
@@ -42,10 +42,7 @@ def api_key(api_key):
   return str(api_key) if api_key else ""
 
 def sort_format(sf):
-  if sf not in sorting_methods:
-    raise ValueError("`{}' is not a valid sorting method".format(sf))
-
-  return sf
+  return getattr(sort, sf)
 
 def format_params(params):
   p = {}
