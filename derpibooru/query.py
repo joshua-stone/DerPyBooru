@@ -38,8 +38,6 @@ class Equal(object):
     else:
       raise ValueError(value)
 
-    return "{}:{}".format(self.name, value)
-
   def __gt__(self, value):
     raise AttributeError("gt")
 
@@ -78,8 +76,8 @@ class Comparable(object):
 
   def __le__(self, value):
     return self.op("lte", value)
-    
 
+    
 class Query(object):
   def __init__(self):
     for field in ["description", "faved_by", "source_url", "orig_sha512_hash",
@@ -90,5 +88,7 @@ class Query(object):
                   "upvotes", "width"]:
       setattr(self, field, Comparable(field))
 
+  def __neg__(self):
+    return self.__class__()
 
 query = Query()
