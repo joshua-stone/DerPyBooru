@@ -25,7 +25,7 @@ __license__ = "Simplified BSD Licence"
 __copyright__ = "Copyright (c) 2014, Joshua Stone"
 
 from .search import Search
-
+from .query import query
 from . import sort
 
 __all__ = [
