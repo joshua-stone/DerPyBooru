@@ -40,91 +40,16 @@ class Image(object):
   """
   def __init__(self, data):
     self._data = data
-  
+    for field in data:
+      if not hasattr(self, field):
+        setattr(self, field, self.data[field]) 
+
   def __str__(self):
     return "Image({0})".format(self.id_number)
 
   @property
-  def id(self):
-    return self.data["id"]
-
-  @property
   def tags(self):
     return self.data["tags"].split(", ")
-
-  @property
-  def is_optimized(self):
-    return self.data["is_optimized"]
-
-  @property
-  def sha512_hash(self):
-    return self.data["sha512_hash"]
-
-  @property
-  def upvotes(self):
-    return self.data["upvotes"]
-
-  @property
-  def aspect_ratio(self):
-    return self.data["aspect_ratio"]
-
-  @property
-  def original_format(self):
-    return self.data["original_format"]
-
-  @property
-  def mime_type(self):
-    return self.data["mime_type"]
-
-  @property
-  def height(self):
-    return self.data["height"]
-
-  @property
-  def updated_at(self):
-    return self.data["updated_at"]
-
-  @property
-  def width(self):
-    return self.data["width"]
-
-  @property
-  def comment_count(self):
-    return self.data["comment_count"]
-
-  @property
-  def tag_ids(self):
-    return self.data["tag_ids"]
-
-  @property
-  def created_at(self):
-    return self.data["created_at"]
-
-  @property
-  def file_name(self):
-    return self.data["file_name"]
-
-  @property
-  def uploader(self):
-    return self.data["uploader"]
-
-  @property
-  def description(self):
-    return self.data["description"]
-
-  @property
-  def orig_sha512_hash(self):
-    return self.data["orig_sha512_hash"]
-
-  @property
-  def id_number(self):
-    return self.data["id_number"]
-
-  @property
-  def license(self):
-    return self.data["license"]
-
-  @property
   def thumb(self):
     return "https:" + self.data["representations"]["thumb"]
 
@@ -165,30 +90,6 @@ class Image(object):
     url = sub("_.*\.", ".", self.image)
 
     return url
-
-  @property
-  def score(self):
-    return self.data["score"]
-
-  @property
-  def downvotes(self):
-    return self.data["downvotes"]
-
-  @property
-  def duplicate_reports(self):
-    return self.data["duplicate_reports"]
-
-  @property
-  def faves(self):
-    return self.data["faves"]
-
-  @property
-  def source_url(self):
-    return self.data["source_url"]
-
-  @property
-  def is_rendered(self):
-    return self.data["is_rendered"]
 
   @property
   def faved_by(self):
