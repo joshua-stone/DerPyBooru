@@ -76,7 +76,7 @@ top_animated = top_scoring.query("animated")
 ###Filtering by metadata
 
 ```python
-from derpibooru import Search, sort, query
+from derpibooru import Search, query
 
 q = {
   "wallpaper",
