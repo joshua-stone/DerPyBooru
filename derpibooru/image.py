@@ -194,23 +194,21 @@ class Image(object):
   def faved_by(self):
     faved_by = "favourited_by_users"
 
-    if self.faves > 0:
-      if not faved_by in self.data:
+    if not faved_by in self.data:
+      if self.faves > 0:
         self.update()
-
-    else:
-      self._data[faved_by] = []
+      else:
+        self._data[faved_by] = []
 
     return self._data[faved_by]
 
   @property
   def comments(self):
-    if self.comment_count > 0:
-      if not "comments" in self.data:
+    if not "comments" in self.data:
+      if self.comment_count > 0:
         self.update()
-
-    else:
-      self._data["comments"] = []
+      else:
+        self._data["comments"] = []
 
     return [Comment(c) for c in self.data["comments"]]
        
