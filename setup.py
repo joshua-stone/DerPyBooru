@@ -7,7 +7,7 @@ import derpibooru
 
 setup(
   name = "DerPyBooru",
-  description = "Python bindings for Derpibooru's API"
+  description = "Python bindings for Derpibooru's API",
   url = "https://github.com/joshua-stone/DerPyBooru",
   version = "0.4",
   author = "Joshua Stone",
