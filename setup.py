@@ -16,7 +16,7 @@ setup(
   packages = find_packages(),
   install_requires = ["requests"],
   include_package_data = True,
-  download_url = "https://github.com/joshua-stone/DerPyBooru/tarball/0.5"
+  download_url = "https://github.com/joshua-stone/DerPyBooru/tarball/0.5",
   classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
