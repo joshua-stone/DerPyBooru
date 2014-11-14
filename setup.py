@@ -22,7 +22,7 @@ setup(
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
-    "License :: OSI Approved :: Simplified BSD License",
+    "License :: OSI Approved :: BSD License",
     "Topic :: Software Development :: Libraries :: Python Modules"
   ]
 )
