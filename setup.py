@@ -17,9 +17,10 @@ setup(
   install_requires = ["requests"],
   include_package_data = True,
   classifiers = [
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
     "License :: OSI Approved :: Simplified BSD License",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Internet"
+    "Topic :: Software Development :: Libraries :: Python Modules"
   ]
 )

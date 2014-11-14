@@ -40,9 +40,10 @@ class Image(object):
   """
   def __init__(self, data):
     self._data = data
-    for field in data:
+
+    for field, body in data.items():
       if not hasattr(self, field):
-        setattr(self, field, self.data[field]) 
+        setattr(self, field, body) 
 
   def __str__(self):
     return "Image({0})".format(self.id_number)
@@ -50,46 +51,51 @@ class Image(object):
   @property
   def tags(self):
     return self.data["tags"].split(", ")
+
+  @property
+  def representations(self):
+    sizes = self.data["representations"].items()
+    images = { image: "https:{}".format(url) for image, url in sizes }
+
+    return images
+
+  @property
   def thumb(self):
-    return "https:" + self.data["representations"]["thumb"]
+    return self.representations["thumb"]
 
   @property
   def thumb_tiny(self):
-    return "https:" + self.data["representations"]["thumb_tiny"]
+    return self.representations["thumb_tiny"]
 
   @property
   def small(self):
-    return "https:" + self.data["representations"]["small"]
+    return self.representations["small"]
 
   @property
   def full(self):
-    return "https:" + self.data["representations"]["full"]
-
-  @property
-  def tall(self):
-    return "https:" + self.data["representations"]["tall"]
-
-  @property
-  def large(self):
-    return "https:" + self.data["representations"]["large"]
-
-  @property
-  def medium(self):
-    return "https:" + self.data["representations"]["medium"]
-
-  @property
-  def thumb_small(self):
-    return "https:" + self.data["representations"]["thumb_small"]
-
-  @property
-  def image(self):
-    return "https:" + self.data["image"]
-
-  @property
-  def image_shortened(self):
     url = sub("_.*\.", ".", self.image)
 
     return url
+
+  @property
+  def tall(self):
+    return self.representations["tall"]
+
+  @property
+  def large(self):
+    return self.representations["large"]
+
+  @property
+  def medium(self):
+    return self.representations["medium"]
+
+  @property
+  def thumb_small(self):
+    return self.representations["thumb_small"]
+
+  @property
+  def image(self):
+    return self.representations["full"]
 
   @property
   def faved_by(self):

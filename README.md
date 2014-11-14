@@ -11,7 +11,7 @@ License: **Simplified BSD License**
 
 ## How to install
 
-    pip install https://github.com/joshua-stone/pyderpibooru/zipball/master
+    pip install https://github.com/joshua-stone/DerPyBooru/zipball/master
 
 ##Typical usage
 
@@ -22,10 +22,10 @@ from derpibooru import Search
 
 for image in Search():
   id, score, tags = image.id_number, image.score, ", ".join(image.tags)
-  print("#{} - score: {:>2} - {}".format(id, score, tags))
+  print("#{} - score: {:>3} - {}".format(id, score, tags))
 ```
 
-###Searching by tag
+###Searching posts by tag
 
 ```python
 from derpibooru import Search
@@ -34,7 +34,7 @@ for image in Search().query("rarity", "twilight sparkle"):
   print(image.url)
 ```
 
-###Crawling Derpibooru from first to last image
+###Crawling Derpibooru from first to last post
 
 ```python
 from derpibooru import Search
@@ -46,7 +46,7 @@ for image in Search().ascending().image_limit(None):
   print("#{} - score: {:>3} - {}".format(id, score, tags))
 ```
 
-###Getting random images
+###Getting random posts
 
 ```python
 from derpibooru import Search, sort
@@ -87,3 +87,4 @@ q = {
 
 wallpapers = [image for image in Search().query(*q)]
 ```
+

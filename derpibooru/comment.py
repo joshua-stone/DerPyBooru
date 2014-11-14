@@ -31,22 +31,13 @@ __all__ = [
 class Comment(object):
   def __init__(self, data):
     self._data = data
+    for field, body in self.data.items():
+      setattr(self, field, body)
 
   def __str__(self):
     return "Comment({0})".format(self.author)
+
   @property
   def data(self):
     return self._data
-
-  @property
-  def image_id(self):
-    return self.data["image_id"]
-
-  @property
-  def author(self):
-    return self.data["author"]
-
-  @property
-  def body(self):
-    return self.data["body"]
 
