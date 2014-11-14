@@ -28,7 +28,8 @@ __all__ = [
   "tags",
   "api_key",
   "sort_format",
-  "format_params"
+  "format_params",
+  "join_params"
 ]
 
 from .sort import sort
@@ -57,4 +58,9 @@ def format_params(params):
       p[key] = value
 
   return p
+
+def join_params(old_params, new_params):
+  new_dict = dict(list(old_params.items()) + list(new_params.items()))
+
+  return new_dict
 

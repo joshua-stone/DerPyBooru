@@ -28,7 +28,7 @@ from sys import version_info
 
 from .request import get_images, url
 from .image import Image
-from .helpers import tags, api_key, sort_format
+from .helpers import tags, api_key, sort_format, join_params
 
 __all__ = [
   "Search"
@@ -128,40 +128,56 @@ class Search(object):
 
     return url(params)
 
-  def api_key(self, key=None):
+  def api_key(self, key=""):
     """
     Takes a user's API key string which applies content settings. API keys can
     be found at <https://derpiboo.ru/users/edit>
     """
-    return self.__class__(key, self.q, self.sf, self.sd, self.limit)
+    new_params = join_params(self.parameters, {"key": key})
+
+    return self.__class__(**new_params)
 
   def query(self, *q):
     """
     Takes one or more strings for searching by tag and/or metadata
     """
-    return self.__class__(self.key, q, self.sf, self.sd, self.limit)
+    new_params = join_params(self.parameters, {"q": q})
+
+    return self.__class__(**new_params)
 
   def sort_by(self, sf):
     """
     Determines how to sort search results; default is sort.creation_date
     """
-    return self.__class__(self.key, self.q, sf, self.sd, self.limit)
+    new_params = join_params(self.parameters, {"sf": sf})
+
+    return self.__class__(**new_params)
 
   def descending(self):
-    return self.__class__(self.key, self.q, self.sf, "desc", self.limit)
+    return self.__class__(self.key, self.q, sf, self.sd, self.limit)
+    """
+    Order results from largest to smallest; default is descending order
+    """
+    new_params = join_params(self.parameters, {"sd": "desc"})
+
+    return self.__class__(**new_params)
 
   def ascending(self):
     """
     Order results from smallest to largest; default is descending order
     """
-    return self.__class__(self.key, self.q, self.sf, "asc", self.limit)
+    new_params = join_params(self.parameters, {"sd": "asc"})
+
+    return self.__class__(**new_params)
 
   def image_limit(self, limit):
     """
     Set absolute limit on number of images to return, or set to None to return
     as many results as needed; default 50 images
     """
-    return self.__class__(self.key, self.q, self.sf, self.sd, limit)
+    new_params = join_params(self.parameters, {"limit": limit})
+
+    return self.__class__(**new_params)
 
 if version_info < (3, 0):
   def next(self):
