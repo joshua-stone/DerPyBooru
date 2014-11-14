@@ -9,7 +9,7 @@ setup(
   name = "DerPyBooru",
   description = "Python bindings for Derpibooru's API",
   url = "https://github.com/joshua-stone/DerPyBooru",
-  version = "0.5",
+  version = "0.5.1",
   author = "Joshua Stone",
   license = "Simplified BSD License",
   platforms = ["any"],
