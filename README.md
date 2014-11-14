@@ -11,7 +11,7 @@ License: **Simplified BSD License**
 
 ## How to install
 
-    pip install https://github.com/joshua-stone/DerPyBooru/zipball/master
+    pip install derpybooru
 
 ##Typical usage
 

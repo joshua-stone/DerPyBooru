@@ -9,13 +9,14 @@ setup(
   name = "DerPyBooru",
   description = "Python bindings for Derpibooru's API",
   url = "https://github.com/joshua-stone/DerPyBooru",
-  version = "0.4",
+  version = "0.5",
   author = "Joshua Stone",
   license = "Simplified BSD License",
   platforms = ["any"],
   packages = find_packages(),
   install_requires = ["requests"],
   include_package_data = True,
+  download_url = "https://github.com/joshua-stone/DerPyBooru/tarball/0.5"
   classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
