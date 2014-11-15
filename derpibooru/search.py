@@ -43,7 +43,8 @@ class Search(object):
   interactions predictable as well as making versioning of searches relatively
   easy.
   """
-  def __init__(self, key="", q={}, sf="created_at", sd="desc", limit=50):
+  def __init__(self, key="", q={}, sf="created_at", sd="desc", limit=50,
+               faves="", upvotes="", uploads="", watched=""):
     """
     By default initializes an instance of Search with the parameters to get
     the first 50 images on Derpibooru's front page
@@ -53,10 +54,13 @@ class Search(object):
       "q": tags(q),
       "sf": sort_format(sf),
       "sd": sd,
-      "limit": limit
+      "faves": faves,
+      "upvotes": upvotes,
+      "uploads": uploads,
+      "watched": watched
     }
-
-    self._search = get_images(**self.parameters)
+    self._limit = limit
+    self._search = get_images(self.parameters, self._limit)
   
   def __iter__(self):
     """
@@ -109,7 +113,7 @@ class Search(object):
     Returns the current limit set for image results; default is 50 so as to be
     less of a burden on Derpibooru
     """
-    return self.parameters["limit"]
+    return self._limit
 
   @property
   def url(self):
@@ -119,54 +123,46 @@ class Search(object):
 
     https://derpiboo.ru/search?sd=desc&sf=created_at&q=%2A
     """
-    params = {
-      "key": self.key,
-      "q": self.q,
-      "sf": self.sf,
-      "sd": self.sd,
-    }
-
-    return url(params)
+    return url(self.parameters)
 
   def api_key(self, key=""):
     """
     Takes a user's API key string which applies content settings. API keys can
     be found at <https://derpiboo.ru/users/edit>
     """
-    new_params = join_params(self.parameters, {"key": key})
+    params = join_params(self.parameters, {"key": key, "limit": self.limit})
 
-    return self.__class__(**new_params)
+    return self.__class__(**params)
 
   def query(self, *q):
     """
     Takes one or more strings for searching by tag and/or metadata
     """
-    new_params = join_params(self.parameters, {"q": q})
+    params = join_params(self.parameters, {"q": q, "limit": self.limit})
 
-    return self.__class__(**new_params)
+    return self.__class__(**params)
 
   def sort_by(self, sf):
     """
     Determines how to sort search results; default is sort.creation_date
     """
-    new_params = join_params(self.parameters, {"sf": sf})
+    params = join_params(self.parameters, {"sf": sf, "limit": self.limit})
 
-    return self.__class__(**new_params)
+    return self.__class__(**params)
 
   def descending(self):
-    return self.__class__(self.key, self.q, sf, self.sd, self.limit)
     """
     Order results from largest to smallest; default is descending order
     """
-    new_params = join_params(self.parameters, {"sd": "desc"})
+    params = join_params(self.parameters, {"sd": "desc", "limit": self.limit})
 
-    return self.__class__(**new_params)
+    return self.__class__(**params)
 
   def ascending(self):
     """
     Order results from smallest to largest; default is descending order
     """
-    new_params = join_params(self.parameters, {"sd": "asc"})
+    params = join_params(self.parameters, {"sd": "asc", "limit": self.limit})
 
     return self.__class__(**new_params)
 
@@ -175,9 +171,29 @@ class Search(object):
     Set absolute limit on number of images to return, or set to None to return
     as many results as needed; default 50 images
     """
-    new_params = join_params(self.parameters, {"limit": limit})
+    params = join_params(self.parameters, {"limit": self.limit})
 
-    return self.__class__(**new_params)
+    return self.__class__(**params)
+
+  def faves(self, option):
+    params = join_params(self.parameters, {"faves": option, "limit": self.limit})
+
+    return self.__class__(**params)
+
+  def upvotes(self, option):
+    params = join_params(self.parameters, {"upvotes": option, "limit": self.limit})
+
+    return self.__class__(**params)
+
+  def uploads(self, option):
+    params = join_params(self.parameters, {"uploads": option, "limit": self.limit})
+
+    return self.__class__(**params)
+
+  def watched(self, option):
+    params = join_params(self.parameters, {"watched": option, "limit": self.limit})
+
+    return self.__class__(**params)
 
 if version_info < (3, 0):
   def next(self):

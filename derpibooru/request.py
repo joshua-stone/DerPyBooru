@@ -26,7 +26,7 @@
 
 from requests import get, codes
 from sys import version_info
-from .helpers import format_params
+from .helpers import format_params, join_params
 
 __all__ = [
   "url",
@@ -62,15 +62,8 @@ def request(params):
     params["page"] += 1
     request = get(search, params=params)
 
-def get_images(key="", q={}, sf="created_at", sd="desc", limit=50):
-  params = format_params({
-    "key": key,
-    "q":  q,
-    "sf": sf,
-    "sd": sd,
-    "page": 1,
-    "perpage": 50
-  })
+def get_images(parameters, limit=50):
+  params = format_params(join_params(parameters, {"perpage": 50, "page": 1}))
   
   if limit is not None:
     l = int(limit)
