@@ -60,7 +60,7 @@ class Search(object):
       "watched": watched
     }
     self._limit = limit
-    self._search = get_images(self.parameters, self._limit)
+    self._search = get_images(self.parameters, self.limit)
   
   def __iter__(self):
     """
@@ -171,8 +171,8 @@ class Search(object):
     Set absolute limit on number of images to return, or set to None to return
     as many results as needed; default 50 images
     """
-    params = join_params(self.parameters, {"limit": self.limit})
-
+    params = join_params(self.parameters, {"limit": limit})
+    print(params)
     return self.__class__(**params)
 
   def faves(self, option):
