@@ -30,16 +30,16 @@ __all__ = [
 
 class User(object):
   def __init__(self):
-    for option in self.available_options:
-      setattr(self, option, option)
+    for option in self.options:
+      setattr(self, option.upper(), option)
 
   @property
-  def available_options(self):
-    user_options = {
+  def options(self):
+    available_options = {
       "only",
       "not"
     }
-
-    return user_options
+    return available_options
 
 user = User()
+

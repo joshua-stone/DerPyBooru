@@ -33,6 +33,7 @@ __all__ = [
 ]
 
 from .sort import sort
+from .user import user
 
 def tags(q):
   tags = {str(tag).strip() for tag in q if tag}
@@ -43,7 +44,10 @@ def api_key(api_key):
   return str(api_key) if api_key else ""
 
 def sort_format(sf):
-  return getattr(sort, sf)
+  return getattr(sort, sf.upper())
+
+def user_option(option):
+  return "" if not option else getattr(user, option.upper())
 
 def format_params(params):
   p = {}
@@ -54,6 +58,9 @@ def format_params(params):
         p["key"] = value
     elif key == "q":
       p["q"] = ",".join(value) if value else "*"
+    elif key in ("faves", "upvotes", "uploads", "watched"):
+      if value:
+        p[key] = value
     else:
       p[key] = value
 

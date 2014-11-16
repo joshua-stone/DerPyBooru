@@ -30,11 +30,11 @@ __all__ = [
 
 class Sort(object):
   def __init__(self):
-    for method in self.available_methods:
-      setattr(self, method, method)
+    for method in self.methods:
+      setattr(self, method.upper(), method)
 
   @property
-  def available_methods(self):
+  def methods(self):
     sorting_methods = {
       "created_at",
       "score",
@@ -47,3 +47,4 @@ class Sort(object):
     return sorting_methods
 
 sort = Sort()
+

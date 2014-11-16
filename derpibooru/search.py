@@ -28,7 +28,7 @@ from sys import version_info
 
 from .request import get_images, url
 from .image import Image
-from .helpers import tags, api_key, sort_format, join_params
+from .helpers import tags, api_key, sort_format, join_params, user_option
 
 __all__ = [
   "Search"
@@ -54,10 +54,10 @@ class Search(object):
       "q": tags(q),
       "sf": sort_format(sf),
       "sd": sd,
-      "faves": faves,
-      "upvotes": upvotes,
-      "uploads": uploads,
-      "watched": watched
+      "faves": user_option(faves),
+      "upvotes": user_option(upvotes),
+      "uploads": user_option(uploads),
+      "watched": user_option(watched)
     }
     self._limit = limit
     self._search = get_images(self.parameters, self.limit)

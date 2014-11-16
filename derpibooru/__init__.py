@@ -27,9 +27,11 @@ __copyright__ = "Copyright (c) 2014, Joshua Stone"
 from .search import Search
 from .query import query
 from .sort import sort
+from .user import user
 
 __all__ = [
   "Search",
   "query",
-  "sort"
+  "sort",
+  "user"
 ]
