@@ -51,15 +51,15 @@ for image in Search().ascending().image_limit(None):
 ```python
 from derpibooru import Search, sort
 
-for image in Search().sort_by(sort.random):
-  print(image.url)
+for post in Search().sort_by(sort.RANDOM):
+  print(post.url)
 ```
 
 ###Getting top 100 posts
 ```python
 from derpibooru import Search, sort
 
-top_scoring = [image for image in Search().sort_by(sort.score).image_limit(100)]
+top_scoring = [post for post in Search().sort_by(sort.SCORE).image_limit(100)]
 ```
 
 ###Storing and passing new search parameters
@@ -67,7 +67,7 @@ top_scoring = [image for image in Search().sort_by(sort.score).image_limit(100)]
 ```python
 from derpibooru import Search, sort
 
-params = Search().sort_by(sort.score).image_limit(100).parameters
+params = Search().sort_by(sort.SCORE).image_limit(100).parameters
 
 top_scoring = Search(**params)
 top_animated = top_scoring.query("animated")
@@ -87,4 +87,15 @@ q = {
 
 wallpapers = [image for image in Search().query(*q)]
 ```
+###Getting the latest images from a watchlist
+
+```python
+
+from derpibooru import Search, user
+
+key = "your_api_key"
+
+for post in Search().api_key(key).watched(user.ONLY):
+  id, score, tags = post.id_number, post.score, ", ".join(post.tags)
+  print("#{} - score: {:>3} - {}".format(id, score, tags))
 
