@@ -13,9 +13,13 @@ License: **Simplified BSD License**
 
     pip install derpybooru
 
-##Typical usage
+## Checking documentation
 
-###Getting images currently on Derpibooru's front page
+    pydoc derpibooru
+
+## Typical usage
+
+### Getting images currently on Derpibooru's front page
 
 ```python
 from derpibooru import Search
@@ -25,7 +29,7 @@ for image in Search():
   print("#{} - score: {:>3} - {}".format(id, score, tags))
 ```
 
-###Searching posts by tag
+### Searching posts by tag
 
 ```python
 from derpibooru import Search
@@ -34,7 +38,7 @@ for image in Search().query("rarity", "twilight sparkle"):
   print(image.url)
 ```
 
-###Crawling Derpibooru from first to last post
+### Crawling Derpibooru from first to last post
 
 ```python
 from derpibooru import Search
@@ -46,7 +50,7 @@ for image in Search().ascending().image_limit(None):
   print("#{} - score: {:>3} - {}".format(id, score, tags))
 ```
 
-###Getting random posts
+### Getting random posts
 
 ```python
 from derpibooru import Search, sort
@@ -55,14 +59,14 @@ for post in Search().sort_by(sort.RANDOM):
   print(post.url)
 ```
 
-###Getting top 100 posts
+### Getting top 100 posts
 ```python
 from derpibooru import Search, sort
 
 top_scoring = [post for post in Search().sort_by(sort.SCORE).image_limit(100)]
 ```
 
-###Storing and passing new search parameters
+### Storing and passing new search parameters
 
 ```python
 from derpibooru import Search, sort
@@ -73,7 +77,7 @@ top_scoring = Search(**params)
 top_animated = top_scoring.query("animated")
 ```
 
-###Filtering by metadata
+### Filtering by metadata
 
 ```python
 from derpibooru import Search, query
@@ -87,7 +91,7 @@ q = {
 
 wallpapers = [image for image in Search().query(*q)]
 ```
-###Getting the latest images from a watchlist
+### Getting the latest images from a watchlist
 
 ```python
 
