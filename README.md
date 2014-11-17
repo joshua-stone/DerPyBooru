@@ -45,7 +45,7 @@ from derpibooru import Search
 
 # This is only an example and shouldn't be used in practice as it abuses
 # Derpibooru's licensing terms
-for image in Search().ascending().image_limit(None):
+for image in Search().ascending().limit(None):
   id, score, tags = image.id_number, image.score, ", ".join(image.tags)
   print("#{} - score: {:>3} - {}".format(id, score, tags))
 ```
@@ -63,7 +63,7 @@ for post in Search().sort_by(sort.RANDOM):
 ```python
 from derpibooru import Search, sort
 
-top_scoring = [post for post in Search().sort_by(sort.SCORE).image_limit(100)]
+top_scoring = [post for post in Search().sort_by(sort.SCORE).limit(100)]
 ```
 
 ### Storing and passing new search parameters
@@ -71,7 +71,7 @@ top_scoring = [post for post in Search().sort_by(sort.SCORE).image_limit(100)]
 ```python
 from derpibooru import Search, sort
 
-params = Search().sort_by(sort.SCORE).image_limit(100).parameters
+params = Search().sort_by(sort.SCORE).limit(100).parameters
 
 top_scoring = Search(**params)
 top_animated = top_scoring.query("animated")
