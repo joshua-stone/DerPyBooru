@@ -9,7 +9,7 @@ Python bindings for Derpibooru's API
 Typical usage:
 
 >>> from derpibooru import Search, sort
->>> for image in Search().sort_by(sort.score):
+>>> for image in Search().sort_by(sort.SCORE):
 ...   print(image.url)
 
 Full API Documentation is found at <https://derpiboo.ru/api>.
