@@ -88,7 +88,7 @@ class Search(object):
     """
     return url(self._params)
 
-  def api_key(self, key=""):
+  def key(self, key=""):
     """
     Takes a user's API key string which applies content settings. API keys can
     be found at <https://derpiboo.ru/users/edit>.
@@ -107,7 +107,9 @@ class Search(object):
 
   def sort_by(self, sf):
     """
-    Determines how to sort search results; default is sort.CREATED_AT.
+    Determines how to sort search results. Available sorting methods are
+    sort.SCORE, sort.COMMENTS, sort.HEIGHT, sort.RELEVANCE, sort.CREATED_AT,
+    and sort.RANDOM; default is sort.CREATED_AT.
     """
     params = join_params(self.parameters, {"sf": sf})
 

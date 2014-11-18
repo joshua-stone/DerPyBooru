@@ -4,6 +4,8 @@ Python bindings for Derpibooru's API
 
 License: **Simplified BSD License**
 
+Version: **0.6**
+
 ## Dependencies
 
 - python2.7 or newer
@@ -99,7 +101,7 @@ from derpibooru import Search, user
 
 key = "your_api_key"
 
-for post in Search().api_key(key).watched(user.ONLY):
+for post in Search().key(key).watched(user.ONLY):
   id, score, tags = post.id_number, post.score, ", ".join(post.tags)
   print("#{} - score: {:>3} - {}".format(id, score, tags))
 
