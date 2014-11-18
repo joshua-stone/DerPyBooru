@@ -32,7 +32,8 @@ __all__ = [
   "url",
   "request",
   "get_images",
-  "get_image_data"
+  "get_image_data",
+  "set_limit"
 ]
 
 if version_info < (3, 0):
@@ -59,14 +60,15 @@ def request(params):
     if image_count < 50:
       break
 
-    params["page"] += 1
+    p["page"] += 1
+
     request = get(search, params=p)
 
 def get_images(parameters, limit=50):
   params = join_params(parameters, {"perpage": 50, "page": 1})
 
   if limit is not None:
-    l = int(limit)
+    l = limit
     if l > 0:
       r, counter = request(params), 0
       for index, image in enumerate(r, start=1):

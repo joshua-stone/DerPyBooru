@@ -80,3 +80,12 @@ def join_params(old_params, new_params):
 
   return new_dict
 
+def set_limit(limit):
+
+  if limit is not None:
+    l = int(limit)
+  else:
+    l = None
+
+  return l
+

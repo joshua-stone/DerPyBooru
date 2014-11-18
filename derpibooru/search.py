@@ -28,7 +28,7 @@ from sys import version_info
 
 from .request import get_images, url
 from .image import Image
-from .helpers import tags, api_key, sort_format, join_params, user_option
+from .helpers import tags, api_key, sort_format, join_params, user_option, set_limit
 
 __all__ = [
   "Search"
@@ -59,7 +59,7 @@ class Search(object):
       "uploads": user_option(uploads),
       "watched": user_option(watched)
     }
-    self._limit = limit
+    self._limit = set_limit(limit)
     self._search = get_images(self._params, self._limit)
   
   def __iter__(self):
@@ -129,7 +129,7 @@ class Search(object):
     """
     params = join_params(self.parameters, {"sd": "asc"})
 
-    return self.__class__(**new_params)
+    return self.__class__(**params)
 
   def limit(self, limit):
     """
