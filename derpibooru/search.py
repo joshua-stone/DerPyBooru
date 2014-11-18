@@ -47,7 +47,7 @@ class Search(object):
                faves="", upvotes="", uploads="", watched=""):
     """
     By default initializes an instance of Search with the parameters to get
-    the first 50 images on Derpibooru's front page
+    the first 50 images on Derpibooru's front page.
     """
     self._params = {
       "key": api_key(key),
@@ -65,7 +65,7 @@ class Search(object):
   def __iter__(self):
     """
     Make Search() iterable so that new search results can be lazily generated
-    for performance reasons
+    for performance reasons.
     """
     return self
 
@@ -73,7 +73,7 @@ class Search(object):
   def parameters(self):
     """
     Returns a list of available parameters; useful for passing state to new
-    instances of Search()
+    instances of Search().
     """
     params = join_params(self._params, {"limit": self._limit})
     return params
@@ -91,7 +91,7 @@ class Search(object):
   def api_key(self, key=""):
     """
     Takes a user's API key string which applies content settings. API keys can
-    be found at <https://derpiboo.ru/users/edit>
+    be found at <https://derpiboo.ru/users/edit>.
     """
     params = join_params(self.parameters, {"key": key})
 
@@ -99,7 +99,7 @@ class Search(object):
 
   def query(self, *q):
     """
-    Takes one or more strings for searching by tag and/or metadata
+    Takes one or more strings for searching by tag and/or metadata.
     """
     params = join_params(self.parameters, {"q": q})
 
@@ -107,7 +107,7 @@ class Search(object):
 
   def sort_by(self, sf):
     """
-    Determines how to sort search results; default is sort.creation_date
+    Determines how to sort search results; default is sort.CREATED_AT.
     """
     params = join_params(self.parameters, {"sf": sf})
 
@@ -115,7 +115,7 @@ class Search(object):
 
   def descending(self):
     """
-    Order results from largest to smallest; default is descending order
+    Order results from largest to smallest; default is descending order.
     """
     params = join_params(self.parameters, {"sd": "desc"})
 
@@ -123,7 +123,7 @@ class Search(object):
 
   def ascending(self):
     """
-    Order results from smallest to largest; default is descending order
+    Order results from smallest to largest; default is descending order.
     """
     params = join_params(self.parameters, {"sd": "asc"})
 
@@ -132,28 +132,44 @@ class Search(object):
   def limit(self, limit):
     """
     Set absolute limit on number of images to return, or set to None to return
-    as many results as needed; default 50 images
+    as many results as needed; default 50 posts.
     """
     params = join_params(self.parameters, {"limit": limit})
 
     return self.__class__(**params)
 
   def faves(self, option):
+    """
+    Set whether to filter by a user's faves list. Options available are
+    user.ONLY, user.NOT, and None; default is None.
+    """
     params = join_params(self.parameters, {"faves": option})
 
     return self.__class__(**params)
 
   def upvotes(self, option):
+    """
+    Set whether to filter by a user's upvoted list. Options available are
+    user.ONLY, user.NOT, and None; default is None.
+    """
     params = join_params(self.parameters, {"upvotes": option})
 
     return self.__class__(**params)
 
   def uploads(self, option):
+    """
+    Set whether to filter by a user's uploads list. Options available are
+    user.ONLY, user.NOT, and None; default is None.
+    """
     params = join_params(self.parameters, {"uploads": option})
 
     return self.__class__(**params)
 
   def watched(self, option):
+    """
+    Set whether to filter by a user's watchlist. Options available are
+    user.ONLY, user.NOT, and None; default is None.
+    """
     params = join_params(self.parameters, {"watched": option})
 
     return self.__class__(**params)
@@ -161,7 +177,7 @@ class Search(object):
 if version_info < (3, 0):
   def next(self):
     """
-    Returns a result wrapped in a new instance of Image()
+    Returns a result wrapped in a new instance of Image().
     """
     return Image(self._search.next())
 
@@ -170,7 +186,7 @@ if version_info < (3, 0):
 else:
   def __next__(self):
     """
-    Returns a result wrapped in a new instance of Image()
+    Returns a result wrapped in a new instance of Image().
     """
     return Image(next(self._search))
 
