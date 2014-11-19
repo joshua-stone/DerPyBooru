@@ -6,6 +6,13 @@ License: **Simplified BSD License**
 
 Version: **0.6**
 
+## Features
+
+- High-level abstraction over Derpibooru's REST API
+- Parameter chaining for ease of manipulation
+- Syntactic sugar for queries, e.g., "query.score >= 100" compiling to "score.gte:100"
+- Design focusing on iterables and lazy generation for network efficiency
+
 ## Dependencies
 
 - python2.7 or newer
