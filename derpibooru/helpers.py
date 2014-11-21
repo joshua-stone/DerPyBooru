@@ -65,11 +65,11 @@ def format_params(params):
     if key == "key":
       if value:
         p["key"] = value
+    elif key in ("faves", "upvotes", "uploads", "watched"):
+      if value and params["key"]:
+        p[key] = value
     elif key == "q":
       p["q"] = ",".join(value) if value else "*"
-    elif key in ("faves", "upvotes", "uploads", "watched"):
-      if value:
-        p[key] = value
     else:
       p[key] = value
 
