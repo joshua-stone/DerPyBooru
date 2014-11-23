@@ -20,11 +20,11 @@ Version: **0.6**
 
 ## How to install
 
-    pip install derpybooru
+    $ pip install derpybooru
 
 ## Checking documentation
 
-    pydoc derpibooru
+    $ pydoc derpibooru
 
 ## Typical usage
 
