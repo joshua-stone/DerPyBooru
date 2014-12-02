@@ -2,51 +2,66 @@ import unittest
 from derpibooru import Search
 
 class DerPyBooruAPITests(unittest.TestCase):
-    def testquery(self):
-        """Test a query and make sure it returns correct image count 
-           and all images are valid"""
-        max = 10
-        images = []
-        tag = "sunset shimmer"
-        for i in Search().query(tag).limit(max): images.append(i)
-        self.assertEqual(len(images), max)
-        for i in images:
-            self.assertIsNotNone(i)
-            self.assert_(tag in i.tags)
+    def test_query(self):
+        """
+        Test a query and make sure it returns correct image count and all images
+        are valid
+        """
+        limit, tag = 10, "sunset shimmer"
+        images = [image for image in Search().query(tag).limit(limit)]
 
-    def testascending(self):
-        max = 10
-        images = []
-        for i in Search().ascending().limit(max): images.append(i)
-        self.assertEqual(len(images), max)
+        self.assertEqual(len(images), limit)
 
-        for i in images:
-            self.assertIsNotNone(i)
-            # Must return images with IDs from 0 to 10
-            self.assertLessEqual(i.id_number, 10)
-            """Check if the images are in sequential order
-                by comparing the ID of the next image"""
+        for image in images:
+            self.assertIsNotNone(image)
+            self.assertTrue(tag in image.tags)
+
+    def test_ascending(self):
+        """
+        Tests the functionality of ascending search
+        """
+        limit = 10
+        images = [image for image in Search().ascending().limit(limit)]
+
+        self.assertEqual(len(images), limit)
+
+        for image in images:
+            self.assertIsNotNone(image)
+            """
+            Must return images with IDs from 0 to 10
+            """
+            self.assertLessEqual(image.id_number, 10)
+
+            """
+            Check if the images are in sequential order
+            by comparing the ID of the next image
+            """
             try:
-                nextImg = images[images.index(i) + 1]
+                nextImg = images[images.index(image) + 1]
                 if nextImg is not None:
-                    self.assertLess(i.id_number, nextImg.id_number)
+                    self.assertLess(image.id_number, nextImg.id_number)
             except IndexError:
                 pass
 
-    def testdescending(self):
-        max = 10
-        images = []
-        for i in Search().descending().limit(max): images.append(i)
-        self.assertEqual(len(images), max)
+    def test_descending(self):
+        """
+        Tests the functionality of descending search
+        """
+        limit = 10
+        images = [image for image in Search().descending().limit(limit)]
 
-        for i in images:
-            self.assertIsNotNone(i)
-            """Check if the images are in sequential order
-                by comparing the ID of the next image"""
+        self.assertEqual(len(images), limit)
+
+        for image in images:
+            self.assertIsNotNone(image)
+            """
+            Check if the images are in sequential order
+            by comparing the ID of the next image
+            """
             try:
-                nextImg = images[images.index(i) + 1]
+                nextImg = images[images.index(image) + 1]
                 if nextImg is not None:
-                    self.assertGreater(i.id_number, nextImg.id_number)
+                    self.assertGreater(image.id_number, nextImg.id_number)
             except IndexError:
                 pass
 
