@@ -12,7 +12,7 @@ Typical usage:
 >>> for image in Search().sort_by(sort.SCORE):
 ...   print(image.url)
 
-Full API Documentation is found at <https://derpiboo.ru/api>.
+Full API Documentation is found at <https://derpiboo.ru/pages/api>.
 
 Library documentation is found at <https://github.com/joshua-stone/DerPyBooru>.
 
