@@ -41,7 +41,7 @@ class Sort(object):
       "relevance",
       "height",
       "comments",
-      "random"
+      "_random"
     }
 
     return sorting_methods
