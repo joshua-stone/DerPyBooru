@@ -92,7 +92,7 @@ class Comparable(Query_Field):
 class Query(object):
   def __init__(self):
     for field in ["description", "faved_by", "source_url", "orig_sha512_hash",
-                  "source_url", "sha512_hash", "uploader"]:
+                  "sha512_hash", "uploader"]:
       setattr(self, field, Equal(field))
 
     for field in ["aspect_ratio", "downvotes", "faves", "height", "score",
