@@ -84,14 +84,14 @@ class Search(object):
     Returns a search URL built on set parameters. Example based on default
     parameters:
 
-    https://derpiboo.ru/search?sd=desc&sf=created_at&q=%2A
+    https://derpibooru.org/search?sd=desc&sf=created_at&q=%2A
     """
     return url(self._params)
 
   def key(self, key=""):
     """
     Takes a user's API key string which applies content settings. API keys can
-    be found at <https://derpiboo.ru/users/edit>.
+    be found at <https://derpibooru.org/users/edit>.
     """
     params = join_params(self.parameters, {"key": key})
 

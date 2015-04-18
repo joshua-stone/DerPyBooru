@@ -126,7 +126,7 @@ class Image(object):
        
   @property
   def url(self):
-    return "https://derpiboo.ru/{}".format(self.id_number)
+    return "https://derpibooru.org/{}".format(self.id_number)
 
   @property
   def data(self):

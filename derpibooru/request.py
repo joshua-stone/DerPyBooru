@@ -43,12 +43,12 @@ else:
 
 def url(params):
   p = format_params(params)
-  url = "https://derpiboo.ru/search?{}".format(urlencode(p))
+  url = "https://derpibooru.org/search?{}".format(urlencode(p))
 
   return url
 
 def request(params):
-  search, p = "https://derpiboo.ru/search.json", format_params(params)
+  search, p = "https://derpibooru.org/search.json", format_params(params)
 
   request = get(search, params=p)
 
@@ -81,7 +81,7 @@ def get_images(parameters, limit=50):
       yield image
 
 def get_image_data(id_number):
-  url = "https://derpiboo.ru/{}.json?fav=&comments=".format(id_number)
+  url = "https://derpibooru.org/{}.json?fav=&comments=".format(id_number)
 
   request = get(url)
 
