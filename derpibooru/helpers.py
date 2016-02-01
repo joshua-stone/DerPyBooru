@@ -43,6 +43,10 @@ def tags(q):
 def api_key(api_key):
   return str(api_key) if api_key else ""
 
+def validate_filter(filter_id):
+  # is it always an number?
+  return str(filter_id) if filter_id else ""
+
 def sort_format(sf):
   if sf not in sort.methods:
     raise AttributeError(sf)
