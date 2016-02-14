@@ -143,10 +143,10 @@ class Search(object):
 
   def filter(self, filter_id=""):
     """
-    Takes a filters id string. A Filter's id can
-    be found at <https://derpibooru.org/filters>,
-    by inspecting the "View this filter" links.
-    E.g. 56027 is the NSFW "Everything" filter.
+    Takes a filter's ID to be used in the current search context. Filter IDs can
+    be found at <https://derpibooru.org/filters/> by inspecting the URL parameters.
+    
+    If no filter is provided, the user's current filter will be used.
     """
     params = join_params(self.parameters, {"filter_id": filter_id})
 
