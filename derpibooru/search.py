@@ -28,7 +28,7 @@ from sys import version_info
 
 from .request import get_images, url
 from .image import Image
-from .helpers import tags, api_key, sort_format, join_params, user_option, set_limit
+from .helpers import tags, api_key, sort_format, join_params, user_option, set_limit, validate_filter
 
 __all__ = [
   "Search"
@@ -44,7 +44,7 @@ class Search(object):
   easy.
   """
   def __init__(self, key="", q={}, sf="created_at", sd="desc", limit=50,
-               faves="", upvotes="", uploads="", watched=""):
+               faves="", upvotes="", uploads="", watched="", filter_id=""):
     """
     By default initializes an instance of Search with the parameters to get
     the first 50 images on Derpibooru's front page.
@@ -57,7 +57,8 @@ class Search(object):
       "faves": user_option(faves),
       "upvotes": user_option(upvotes),
       "uploads": user_option(uploads),
-      "watched": user_option(watched)
+      "watched": user_option(watched),
+      "filter_id": validate_filter(filter_id)
     }
     self._limit = set_limit(limit)
     self._search = get_images(self._params, self._limit)
@@ -139,6 +140,18 @@ class Search(object):
     params = join_params(self.parameters, {"limit": limit})
 
     return self.__class__(**params)
+
+  def filter(self, filter_id=""):
+    """
+    Takes a filters id string. A Filter's id can
+    be found at <https://derpibooru.org/filters>,
+    by inspecting the "View this filter" links.
+    E.g. 56027 is the NSFW "Everything" filter.
+    """
+    params = join_params(self.parameters, {"filter_id": filter_id})
+
+    return self.__class__(**params)
+
 
   def faves(self, option):
     """
