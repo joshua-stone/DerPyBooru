@@ -126,14 +126,14 @@ class Image(object):
        
   @property
   def url(self):
-    return "https://derpibooru.org/{}".format(self.id_number)
+    return "https://derpibooru.org/{}".format(self.id)
 
   @property
   def data(self):
     return self._data
 
   def update(self):
-    data = get_image_data(self.id_number)
+    data = get_image_data(self.id)
 
     if data:
       self._data = data
