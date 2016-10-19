@@ -51,7 +51,7 @@ class Image(object):
 
 
   def __str__(self):
-    return "Image({0})".format(self.id_number)
+    return "Image({0})".format(self.id)
 
   @property
   def tags(self):
