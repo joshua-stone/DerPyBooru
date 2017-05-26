@@ -46,7 +46,7 @@ Version: **0.7**
 from derpibooru import Search
 
 for image in Search():
-  id_number, score, tags = image.id_number, image.score, ", ".join(image.tags)
+  id_number, score, tags = image.id, image.score, ", ".join(image.tags)
   print("#{} - score: {:>3} - {}".format(id_number, score, tags))
 ```
 
@@ -67,7 +67,7 @@ from derpibooru import Search
 # This is only an example and shouldn't be used in practice as it abuses
 # Derpibooru's licensing terms
 for image in Search().ascending().limit(None):
-  id_number, score, tags = image.id_number, image.score, ", ".join(image.tags)
+  id_number, score, tags = image.id, image.score, ", ".join(image.tags)
   print("#{} - score: {:>3} - {}".format(id_number, score, tags))
 ```
 
@@ -121,6 +121,6 @@ from derpibooru import Search, user
 key = "your_api_key"
 
 for post in Search().key(key).watched(user.ONLY):
-  id_number, score, tags = post.id_number, post.score, ", ".join(post.tags)
+  id_number, score, tags = post.id, post.score, ", ".join(post.tags)
   print("#{} - score: {:>3} - {}".format(id_number, score, tags))
 
