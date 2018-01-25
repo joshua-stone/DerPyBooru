@@ -3,8 +3,6 @@
 from setuptools import setup
 from setuptools import find_packages
 
-import derpibooru
-
 setup(
   name = "DerPyBooru",
   description = "Python bindings for Derpibooru's API",
