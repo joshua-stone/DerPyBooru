@@ -48,12 +48,12 @@ def url(params):
   return url
 
 def request(params):
-  search, p = "https://derpibooru.org/search.json", format_params(params)
+  search, p = "https://derpibooru.org/api/v1/json/search/images", format_params(params)
 
   request = get(search, params=p)
 
   while request.status_code == codes.ok:
-    images, image_count = request.json()["search"], 0
+    images, image_count = request.json()["images"], 0
     for image in images:
       yield image
       image_count += 1
@@ -65,7 +65,7 @@ def request(params):
     request = get(search, params=p)
 
 def get_images(parameters, limit=50):
-  params = join_params(parameters, {"perpage": 50, "page": 1})
+  params = join_params(parameters, {"per_page": 50, "page": 1})
 
   if limit is not None:
     l = limit
@@ -81,7 +81,7 @@ def get_images(parameters, limit=50):
       yield image
 
 def get_image_data(id_number):
-  url = "https://derpibooru.org/{}.json?fav=&comments=".format(id_number)
+  url = "https://derpibooru.org/api/v1/json/images/{}".format(id_number)
 
   request = get(url)
 
