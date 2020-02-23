@@ -50,14 +50,11 @@ class Image(object):
 
   @property
   def tags(self):
-    return self.data["tags"].split(", ")
+    return self.data["tags"]
 
   @property
   def representations(self):
-    sizes = self.data["representations"].items()
-    images = { image: "https:{}".format(url) for image, url in sizes }
-
-    return images
+    return self.data["representations"]
 
   @property
   def thumb(self):
@@ -73,9 +70,7 @@ class Image(object):
 
   @property
   def full(self):
-    url = sub("_.*\.", ".", self.image)
-
-    return url
+    return self.representations["full"]
 
   @property
   def tall(self):
@@ -97,28 +92,6 @@ class Image(object):
   def image(self):
     return self.representations["full"]
 
-  @property
-  def faved_by(self):
-    faved_by = "favourited_by_users"
-
-    if not faved_by in self.data:
-      if self.faves > 0:
-        self.update()
-      else:
-        self._data[faved_by] = []
-
-    return self._data[faved_by]
-
-  @property
-  def comments(self):
-    if not "comments" in self.data:
-      if self.comment_count > 0:
-        self.update()
-      else:
-        self._data["comments"] = []
-
-    return [Comment(c) for c in self.data["comments"]]
-       
   @property
   def url(self):
     return "https://derpibooru.org/{}".format(self.id)

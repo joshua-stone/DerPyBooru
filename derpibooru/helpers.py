@@ -66,9 +66,9 @@ def format_params(params):
   p = {}
 
   for key, value in params.items():
-    if key == "key":
+    if key == "key" or key == "filter_id":
       if value:
-        p["key"] = value
+        p[key] = value
     elif key in ("faves", "upvotes", "uploads", "watched"):
       if value and params["key"]:
         p[key] = value
