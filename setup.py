@@ -7,7 +7,7 @@ setup(
   name = "DerPyBooru",
   description = "Python bindings for Derpibooru's API",
   url = "https://github.com/joshua-stone/DerPyBooru",
-  version = "0.7.2",
+  version = "0.7.4",
   author = "Joshua Stone",
   author_email = "joshua.gage.stone@gmail.com",
   license = "Simplified BSD License",
