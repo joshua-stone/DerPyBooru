@@ -4,7 +4,7 @@ Python bindings for Derpibooru's API
 
 License: **Simplified BSD License**
 
-Version: **0.7**
+Version: **0.7.4**
 
 ## Features
 
